@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar Tone & Practice Hub</title>
+    <style>
+        :root {
+            --bg: #121212;
+            --card: #1e1e1e;
+            --accent: #f59e0b;
+            --text: #f3f4f6;
+            --muted: #9ca3af;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+        header {
+            background: var(--card); padding: 1rem 2rem; display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent);
+        }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
+        .lang-btn {
+            background: transparent; border: 1px solid var(--accent); color: var(--accent);
+            padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-weight: bold;
+        }
+        .lang-btn:hover { background: var(--accent); color: #000; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .hero { text-align: center; margin-bottom: 3rem; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .hero p { color: var(--muted); }
+        .card {
+            background: var(--card); padding: 1.5rem; border-radius: 10px;
+            margin-bottom: 2rem; border: 1px solid #333;
+        }
+        h2 { color: var(--accent); margin-bottom: 1rem; }
+        select, button.action-btn {
+            padding: 0.7rem 1rem; border-radius: 6px; border: none; font-size: 1rem; margin-right: 0.5rem;
+        }
+        select { background: #2c2c2c; color: #fff; border: 1px solid #444; }
+        button.action-btn { background: var(--accent); color: #000; font-weight: bold; cursor: pointer; }
+        button.action-btn:hover { opacity: 0.9; }
+        .result-box {
+            margin-top: 1.5rem; padding: 1.2rem; background: #141414;
+            border-left: 4px solid var(--accent); border-radius: 4px; font-size: 1.2rem;
+        }
+        .guide-list { list-style: none; }
+        .guide-list li {
+            padding: 1rem; border-bottom: 1px solid #333; display: flex; justify-content: space-between;
+        }
+        .guide-list li:last-child { border-bottom: none; }
+        .badge { background: #333; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; color: var(--accent); }
+        footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🎸 ToneLab Guitar</div>
+    <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">ES / Español</button>
+</header>
+
+<div class="container">
+    <section class="hero">
+        <h1 data-en="Electric Guitar Tools & Tone Guides" data-es="Herramientas y Guías de Sonido para Guitarra">Electric Guitar Tools & Tone Guides</h1>
+        <p data-en="Practice smarter and dial in iconic guitar tones for free." data-es="Practica mejor y consigue tonos icónicos de guitarra gratis.">Practice smarter and dial in iconic guitar tones for free.</p>
+    </section>
+
+    <!-- HERRAMIENTA 1: GENERADOR DE PROGRESIONES -->
+    <section class="card">
+        <h2 data-en="🎲 Jam Progression Generator" data-es="🎲 Generador de Progresiones para Improvisar">🎲 Jam Progression Generator</h2>
+        <p style="margin-bottom: 1rem; color: var(--muted);" 
+           data-en="Select a genre to get a random chord progression and recommended scale:" 
+           data-es="Elige un estilo para obtener una progresión de acordes y la escala recomendada:">
+           Select a genre to get a random chord progression and recommended scale:
+        </p>
+        
+        <select id="genreSelect">
+            <option value="rock">Classic Rock</option>
+            <option value="blues">Blues</option>
+            <option value="metal">Heavy Metal</option>
+        </select>
+        <button class="action-btn" onclick="generateProgression()" data-en="Generate" data-es="Generar">Generate</button>
+
+        <div class="result-box" id="progressionResult">
+            <span data-en="Click 'Generate' to start jamming!" data-es="¡Pulsa 'Generar' para empezar a tocar!">Click 'Generate' to start jamming!</span>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 2: GUÍAS DE SONIDO -->
+    <section class="card">
+        <h2 data-en="🎛️ Iconic Tone Guides (Coming Soon)" data-es="🎛️ Guías de Sonido Icónico (Próximamente)">🎛️ Iconic Tone Guides (Coming Soon)</h2>
+        <ul class="guide-list">
+            <li>
+                <span data-en="How to sound like Kurt Cobain (Nirvana) on a budget" data-es="Cómo sonar como Kurt Cobain (Nirvana) con poco presupuesto">How to sound like Kurt Cobain (Nirvana) on a budget</span>
+                <span class="badge">Grunge</span>
+            </li>
+            <li>
+                <span data-en="Basic Amp EQ settings for Heavy Metal" data-es="Ajustes básicos de ecualización en el ampli para Heavy Metal">Basic Amp EQ settings for Heavy Metal</span>
+                <span class="badge">Metal</span>
+            </li>
+            <li>
+                <span data-en="John Frusciante clean & lead tone settings" data-es="Configuración de tono limpio y solo de John Frusciante">John Frusciante clean & lead tone settings</span>
+                <span class="badge">Funk Rock</span>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<footer>
+    <p>© 2026 ToneLab Guitar - b3bebug.github.io</p>
+</footer>
+
+<script>
+    let currentLang = 'en';
+
+    const progressions = {
+        rock: [
+            { chords: "A5 - G5 - D5 - A5", scaleEn: "A Minor Pentatonic", scaleEs: "Pentatónica de La Menor" },
+            { chords: "E - B - C#m - A", scaleEn: "E Major / C# Minor Pentatonic", scaleEs: "Mi Mayor / Pentatónica de Do# Menor" },
+            { chords: "G - D - Em - C", scaleEn: "G Major Scale", scaleEs: "Escala de Sol Mayor" }
+        ],
+        blues: [
+            { chords: "A7 - D7 - A7 - E7 - D7 - A7", scaleEn: "A Blues Scale", scaleEs: "Escala de Blues en La" },
+            { chords: "E7 - A7 - E7 - B7 - A7 - E7", scaleEn: "E Minor Pentatonic", scaleEs: "Pentatónica de Mi Menor" }
+        ],
+        metal: [
+            { chords: "E5 - F5 - G5 - F5", scaleEn: "E Phrygian Dominant", scaleEs: "Mi Frigio Dominante" },
+            { chords: "D5 - Bb5 - C5 - A5", scaleEn: "D Natural Minor", scaleEs: "Re Menor Natural" }
+        ]
+    };
+
+    function generateProgression() {
+        const genre = document.getElementById('genreSelect').value;
+        const list = progressions[genre];
+        const randomItem = list[Math.floor(Math.random() * list.length)];
+        const resultDiv = document.getElementById('progressionResult');
+
+        if (currentLang === 'en') {
+            resultDiv.innerHTML = `<strong>Chords:</strong> ${randomItem.chords}<br><small style="color:#f59e0b;">Scale: ${randomItem.scaleEn}</small>`;
+        } else {
+            resultDiv.innerHTML = `<strong>Acordes:</strong> ${randomItem.chords}<br><small style="color:#f59e0b;">Escala: ${randomItem.scaleEs}</small>`;
+        }
+    }
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'en' ? 'es' : 'en';
+        document.getElementById('langBtn').innerText = currentLang === 'en' ? 'ES / Español' : 'EN / English';
+        
+        document.querySelectorAll('[data-en]').forEach(el => {
+            el.innerText = el.getAttribute(`data-${currentLang}`);
+        });
+    }
+</script>
+
+</body>
+</html>
