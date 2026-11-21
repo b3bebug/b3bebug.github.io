@@ -1,152 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToneLab Guitar - Electric Guitar Tools & Tone Guides</title>
-    <style>
-        :root {
-            --bg: #121212;
-            --card: #1e1e1e;
-            --accent: #f59e0b;
-            --text: #f3f4f6;
-            --muted: #9ca3af;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-        header {
-            background: var(--card); padding: 1rem 2rem; display: flex;
-            justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent);
-        }
-        .logo { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
-        .lang-btn {
-            background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-weight: bold;
-        }
-        .lang-btn:hover { background: var(--accent); color: #000; }
-        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-        .hero { text-align: center; margin-bottom: 3rem; }
-        .hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-        .hero p { color: var(--muted); }
-        .card {
-            background: var(--card); padding: 1.5rem; border-radius: 10px;
-            margin-bottom: 2rem; border: 1px solid #333;
-        }
-        h2 { color: var(--accent); margin-bottom: 1rem; }
-        .controls-row { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; margin-bottom: 1rem; }
-        select, button.action-btn {
-            padding: 0.7rem 1rem; border-radius: 6px; border: none; font-size: 1rem;
-        }
-        select { background: #2c2c2c; color: #fff; border: 1px solid #444; }
-        button.action-btn { background: var(--accent); color: #000; font-weight: bold; cursor: pointer; }
-        button.action-btn:hover { opacity: 0.9; }
-        button.stop-btn { background: #ef4444; color: #fff; }
-        .result-box {
-            margin-top: 1rem; padding: 1.2rem; background: #141414;
-            border-left: 4px solid var(--accent); border-radius: 4px; font-size: 1.2rem;
-        }
-        .player-panel {
-            margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid #333;
-            display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
-        }
-        .bpm-control { display: flex; align-items: center; gap: 0.6rem; }
-        input[type="range"] { accent-color: var(--accent); cursor: pointer; }
-        .beat-dots { display: flex; gap: 0.5rem; }
-        .dot {
-            width: 14px; height: 14px; border-radius: 50%; background: #333; transition: 0.1s;
-        }
-        .dot.active { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-        .guide-list { list-style: none; }
-        .guide-list li {
-            padding: 1rem; border-bottom: 1px solid #333; display: flex; justify-content: space-between;
-        }
-        .guide-list li:last-child { border-bottom: none; }
-        .badge { background: #333; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; color: var(--accent); }
-        footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToneLab Guitar</title>
+<style>
+:root{--bg:#121212;--card:#1e1e1e;--accent:#f59e0b;--text:#f3f4f6;--muted:#9ca3af}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+body{background:var(--bg);color:var(--text);line-height:1.6}
+header{background:var(--card);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--accent)}
+.logo{font-size:1.4rem;font-weight:bold;color:var(--accent)}
+.lang-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:.4rem .8rem;border-radius:6px;cursor:pointer;font-weight:bold}
+.lang-btn:hover{background:var(--accent);color:#000}
+.container{max-width:900px;margin:2rem auto;padding:0 1rem}
+.hero{text-align:center;margin-bottom:2.5rem}
+.hero h1{font-size:2.1rem;margin-bottom:.5rem}
+.hero p{color:var(--muted)}
+.card{background:var(--card);padding:1.5rem;border-radius:10px;margin-bottom:2rem;border:1px solid #333}
+h2{color:var(--accent);margin-bottom:1rem}
+.row{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1rem}
+select,button.btn{padding:.7rem 1rem;border-radius:6px;border:none;font-size:1rem}
+select{background:#2c2c2c;color:#fff;border:1px solid #444}
+button.btn{background:var(--accent);color:#000;font-weight:bold;cursor:pointer}
+button.stop{background:#ef4444;color:#fff}
+.res{margin-top:1rem;padding:1.2rem;background:#141414;border-left:4px solid var(--accent);border-radius:4px;font-size:1.2rem}
+.panel{margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid #333;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+.dots{display:flex;gap:.5rem}
+.dot{width:14px;height:14px;border-radius:50%;background:#333}
+.dot.on{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.list{list-style:none}
+.list li{padding:1rem;border-bottom:1px solid #333;display:flex;justify-content:space-between}
+.list li:last-child{border-bottom:none}
+.badge{background:#333;padding:.2rem .6rem;border-radius:4px;font-size:.85rem;color:var(--accent)}
+footer{text-align:center;padding:2rem;color:var(--muted);font-size:.9rem}
+</style>
 </head>
 <body>
-
 <header>
-    <div class="logo">🎸 ToneLab Guitar</div>
-    <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">ES / Español</button>
+  <div class="logo">🎸 ToneLab Guitar</div>
+  <button class="lang-btn" onclick="toggleLang()" id="lBtn">ES / Español</button>
 </header>
-
 <div class="container">
-    <section class="hero">
-        <h1 data-en="Electric Guitar Tools & Tone Guides" data-es="Herramientas y Guías de Sonido para Guitarra">Electric Guitar Tools & Tone Guides</h1>
-        <p data-en="Practice smarter and dial in iconic guitar tones for free." data-es="Practica mejor y consigue tonos icónicos de guitarra gratis.">Practice smarter and dial in iconic guitar tones for free.</p>
-    </section>
-
-    <section class="card">
-        <h2 data-en="🎲 Jam Progression & Backing Track" data-es="🎲 Generador de Progresiones y Base Musical">🎲 Jam Progression & Backing Track</h2>
-        <p style="margin-bottom: 1rem; color: var(--muted);" 
-           data-en="Generate a chord progression and hit Play to jam over a live synth backing track:" 
-           data-es="Genera una progresión de acordes y pulsa Play para improvisar sobre una base musical:">
-           Generate a chord progression and hit Play to jam over a live synth backing track:
-        </p>
-        
-        <div class="controls-row">
-            <select id="genreSelect">
-                <option value="rock">Classic Rock</option>
-                <option value="blues">Blues</option>
-                <option value="metal">Heavy Metal</option>
-            </select>
-            <button class="action-btn" onclick="generateProgression()" data-en="New Progression" data-es="Nueva Progresión">New Progression</button>
-        </div>
-
-        <div class="result-box" id="progressionResult">
-            <strong>Chords:</strong> A5 - G5 - D5 - A5<br>
-            <small style="color:#f59e0b;">Scale: A Minor Pentatonic</small>
-        </div>
-
-        <div class="player-panel">
-            <div class="controls-row" style="margin-bottom:0;">
-                <button class="action-btn" id="playBtn" onclick="togglePlay()" data-en="▶ Play Backing Track" data-es="▶ Reproducir Base">▶ Play Backing Track</button>
-                <label style="font-size: 0.9rem; color: var(--muted); display: flex; align-items: center; gap: 0.4rem;">
-                    <input type="checkbox" id="metroCheck" checked>
-                    <span data-en="Metronome" data-es="Metrónomo">Metronome</span>
-                </label>
-            </div>
-
-            <div class="bpm-control">
-                <span style="font-size: 0.9rem;">BPM: <strong id="bpmVal" style="color:var(--accent);">100</strong></span>
-                <input type="range" id="bpmSlider" min="60" max="160" value="100" oninput="updateBPM(this.value)">
-            </div>
-
-            <div class="beat-dots">
-                <div class="dot" id="dot0"></div>
-                <div class="dot" id="dot1"></div>
-                <div class="dot" id="dot2"></div>
-                <div class="dot" id="dot3"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="card">
-        <h2 data-en="🎛️ Iconic Tone Guides (Next Step)" data-es="🎛️ Guías de Sonido Icónico (Siguiente paso)">🎛️ Iconic Tone Guides (Next Step)</h2>
-        <ul class="guide-list">
-            <li>
-                <span data-en="How to sound like Kurt Cobain (Nirvana) - Visual Amp Settings" data-es="Cómo sonar como Kurt Cobain (Nirvana) - Ajustes visuales de ampli">How to sound like Kurt Cobain (Nirvana) - Visual Amp Settings</span>
-                <span class="badge">Grunge</span>
-            </li>
-            <li>
-                <span data-en="Basic Amp EQ settings for Heavy Metal" data-es="Ajustes básicos de ecualización en el ampli para Heavy Metal">Basic Amp EQ settings for Heavy Metal</span>
-                <span class="badge">Metal</span>
-            </li>
-            <li>
-                <span data-en="John Frusciante clean & lead tone settings" data-es="Configuración de tono limpio y solo de John Frusciante">John Frusciante clean & lead tone settings</span>
-                <span class="badge">Funk Rock</span>
-            </li>
-        </ul>
-    </section>
+  <section class="hero">
+    <h1 data-en="Electric Guitar Tools & Tone Guides" data-es="Herramientas y Guías de Sonido para Guitarra">Electric Guitar Tools & Tone Guides</h1>
+    <p data-en="Practice smarter and dial in iconic guitar tones for free." data-es="Practica mejor y consigue tonos icónicos de guitarra gratis.">Practice smarter and dial in iconic guitar tones for free.</p>
+  </section>
+  <section class="card">
+    <h2 data-en="🎲 Jam Progression & Full Band Backing Track" data-es="🎲 Generador de Progresiones y Banda Completa">🎲 Jam Progression & Full Band Backing Track</h2>
+    <div class="row">
+      <select id="genre">
+        <option value="rock">Classic Rock</option>
+        <option value="blues">Blues</option>
+        <option value="metal">Heavy Metal</option>
+      </select>
+      <button class="btn" onclick="gen()" data-en="New Progression" data-es="Nueva Progresión">New Progression</button>
+    </div>
+    <div class="res" id="res"><strong>Chords:</strong> A5 - G5 - D5 - A5<br><small style="color:#f59e0b">Scale: A Minor Pentatonic</small></div>
+    <div class="panel">
+      <div class="row" style="margin:0">
+        <button class="btn" id="pBtn" onclick="togglePlay()" data-en="▶ Play Band" data-es="▶ Tocar Banda">▶ Play Band</button>
+        <label style="font-size:.9rem;color:var(--muted)"><input type="checkbox" id="mChk" checked> <span data-en="Metronome" data-es="Metrónomo">Metronome</span></label>
+      </div>
+      <div>BPM: <strong id="bVal" style="color:var(--accent)">100</strong> <input type="range" min="60" max="160" value="100" oninput="setBpm(this.value)"></div>
+      <div class="dots"><div class="dot" id="d0"></div><div class="dot" id="d1"></div><div class="dot" id="d2"></div><div class="dot" id="d3"></div></div>
+    </div>
+  </section>
+  <section class="card">
+    <h2 data-en="🎛️ Iconic Tone Guides (Next Step)" data-es="🎛️ Guías de Sonido Icónico (Siguiente paso)">🎛️ Iconic Tone Guides (Next Step)</h2>
+    <ul class="list">
+      <li><span data-en="Kurt Cobain (Nirvana) - Visual Amp Settings" data-es="Kurt Cobain (Nirvana) - Ajustes visuales de ampli">Kurt Cobain (Nirvana) - Visual Amp Settings</span><span class="badge">Grunge</span></li>
+      <li><span data-en="Heavy Metal Basic Amp EQ" data-es="Ecualización básica para Heavy Metal">Heavy Metal Basic Amp EQ</span><span class="badge">Metal</span></li>
+      <li><span data-en="John Frusciante Clean & Lead Tone" data-es="Tono limpio y solo de John Frusciante">John Frusciante Clean & Lead Tone</span><span class="badge">Funk Rock</span></li>
+    </ul>
+  </section>
 </div>
-
-<footer>
-    <p>© 2026 ToneLab Guitar - b3bebug.github.io</p>
-</footer>
-
-<script src="audio.js"></script>
-<script src="app.js"></script>
+<footer><p>© 2026 ToneLab Guitar - b3bebug.github.io</p></footer>
+<script>
+let lang='en',play=false,ctx=null,tmr=null,step=0,cIdx=0,bpm=100;
+const notes={
+  "A5":new Array(110,164.8,220),"G5":new Array(98,146.8,196),"D5":new Array(146.8,220,293.7),
+  "E5":new Array(82.4,123.5,164.8),"F5":new Array(87.3,130.8,174.6),"C5":new Array(130.8,196,261.6),
+  "Bb5":new Array(116.5,174.6,233.1),"E":new Array(82.4,164.8,207.6,246.9),"B":new Array(123.5,185,246.9,311.1),
+  "C#m":new Array(138.6,207.6,277.2,329.6),"A":new Array(110,164.8,220,277.2),"G":new Array(98,146.8,196,246.9),
+  "D":new Array(146.8,220,293.7,370),"Em":new Array(82.4,123.5,164.8,196),"C":new Array(130.8,196,261.6,329.6),
+  "A7":new Array(110,164.8,196,277.2),"D7":new Array(146.8,220,261.6,370),"E7":new Array(82.4,146.8,207.6,246.9),"B7":new Array(123.5,185,220,311.1)
+};
+const progs={
+  rock:new Array({c:new Array("A5","G5","D5","A5"),en:"A Minor Pentatonic",es:"Pentatónica de La Menor"},{c:new Array("E","B","C#m","A"),en:"E Major / C#m Pentatonic",es:"Mi Mayor / Pentatónica Do#m"},{c:new Array("G","D","Em","C"),en:"G Major Scale",es:"Escala Sol Mayor"}),
+  blues:new Array({c:new Array("A7","D7","A7","E7"),en:"A Blues Scale",es:"Escala Blues en La"},{c:new Array("E7","A7","B7","E7"),en:"E Minor Pentatonic",es:"Pentatónica Mi Menor"}),
+  metal:new Array({c:new Array("E5","F5","G5","F5"),en:"E Phrygian Dominant",es:"Mi Frigio Dominante"},{c:new Array("D5","Bb5","C5","A5"),en:"D Natural Minor",es:"Re Menor Natural"})
+};
+let cur=progs.rock.at(0);
+function audio(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)()}
+function organ(fs,dur){
+  audio();const t=ctx.currentTime,flt=ctx.createBiquadFilter();
+  flt.type='lowpass';flt.frequency.setValueAtTime(1400,t);flt.connect(ctx.destination);
+  fs.forEach(f=>{
+    new Array(1,2).forEach((m,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=i===0?'sawtooth':'sine';o.frequency.setValueAtTime(f*m,t);
+      g.gain.setValueAtTime(0.001,t);g.gain.linearRampToValueAtTime(i===0?0.04:0.025,t+0.04);
+      g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur);
+    });
+  });
+}
+function bass(f,dur){
+  audio();const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
+  o.type='triangle';o.frequency.setValueAtTime(f/2,t);
+  g.gain.setValueAtTime(0.22,t);g.gain.exponentialRampToValueAtTime(0.01,t+dur);
+  o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+dur);
+}
+function drum(type){
+  audio();const t=ctx.currentTime;
+  if(type==='k'){
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+0.12);
+    g.gain.setValueAtTime(0.45,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.25);
+    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.25);
+  }else{
+    const len=ctx.sampleRate*(type==='s'?0.16:0.04),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+    const n=ctx.createBufferSource(),flt=ctx.createBiquadFilter(),g=ctx.createGain();
+    n.buffer=buf;flt.type='highpass';flt.frequency.setValueAtTime(type==='s'?900:6000,t);
+    g.gain.setValueAtTime(type==='s'?0.22:0.07,t);g.gain.exponentialRampToValueAtTime(0.001,t+(type==='s'?0.16:0.04));
+    n.connect(flt);flt.connect(g);g.connect(ctx.destination);n.start(t);
+  }
+}
+function click(acc){
+  audio();const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
+  o.frequency.setValueAtTime(acc?1000:600,t);g.gain.setValueAtTime(0.08,t);
+  g.gain.exponentialRampToValueAtTime(0.001,t+0.05);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.05);
+}
+function render(){
+  const txt=cur.c.map((x,i)=>(play&&i===cIdx)?`<span style="color:#f59e0b;text-decoration:underline">${x}</span>`:x).join(" - ");
+  document.getElementById('res').innerHTML=lang==='en'?`<strong>Chords:</strong> ${txt}<br><small style="color:#f59e0b">Scale: ${cur.en}</small>`:`<strong>Acordes:</strong> ${txt}<br><small style="color:#f59e0b">Escala: ${cur.es}</small>`;
+}
+function gen(){
+  const list=progs[document.getElementById('genre').value];
+  cur=list.at(Math.floor(Math.random()*list.length));cIdx=0;step=0;render();
+}
+function tick(){
+  const d8=(60/bpm)/2,b=Math.floor(step/2);
+  if(step%2===0){
+    for(let i=0;i<4;i++)document.getElementById('d'+i).classList.toggle('on',i===b);
+    if(document.getElementById('mChk').checked)click(b===0);
+  }
+  const ns=notes[cur.c.at(cIdx)]||new Array(110);
+  if(step===0){organ(ns,d8*7.6);render();}
+  if(new Array(0,2,3,4,6).includes(step))bass(ns.at(0),d8*0.9);
+  drum('h');
+  if(step===0||step===4||step===5)drum('k');
+  if(step===2||step===6)drum('s');
+  step++;if(step>=8){step=0;cIdx=(cIdx+1)%cur.c.length;}
+}
+function togglePlay(){
+  const b=document.getElementById('pBtn');
+  if(play){clearInterval(tmr);play=false;b.classList.remove('stop');b.innerText=lang==='en'?'▶ Play Band':'▶ Tocar Banda';for(let i=0;i<4;i++)document.getElementById('d'+i).classList.remove('on');render();}
+  else{play=true;step=0;cIdx=0;b.classList.add('stop');b.innerText=lang==='en'?'⏹ Stop':'⏹ Detener';tick();tmr=setInterval(tick,((60/bpm)/2)*1000);}
+}
+function setBpm(v){bpm=v;document.getElementById('bVal').innerText=v;if(play){clearInterval(tmr);tmr=setInterval(tick,((60/bpm)/2)*1000);}}
+function toggleLang(){
+  lang=lang==='en'?'es':'en';document.getElementById('lBtn').innerText=lang==='en'?'ES / Español':'EN / English';
+  document.querySelectorAll('[data-en]').forEach(e=>e.innerText=e.getAttribute('data-'+lang));
+  document.getElementById('pBtn').innerText=play?(lang==='en'?'⏹ Stop':'⏹ Detener'):(lang==='en'?'▶ Play Band':'▶ Tocar Banda');
+  render();
+}
+</script>
 </body>
 </html>
