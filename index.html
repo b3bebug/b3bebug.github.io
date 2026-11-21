@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitar Tone & Practice Hub</title>
+    <title>ToneLab Guitar - Electric Guitar Tools & Tone Guides</title>
     <style>
         :root {
             --bg: #121212;
@@ -33,16 +33,29 @@
             margin-bottom: 2rem; border: 1px solid #333;
         }
         h2 { color: var(--accent); margin-bottom: 1rem; }
+        .controls-row { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; margin-bottom: 1rem; }
         select, button.action-btn {
-            padding: 0.7rem 1rem; border-radius: 6px; border: none; font-size: 1rem; margin-right: 0.5rem;
+            padding: 0.7rem 1rem; border-radius: 6px; border: none; font-size: 1rem;
         }
         select { background: #2c2c2c; color: #fff; border: 1px solid #444; }
         button.action-btn { background: var(--accent); color: #000; font-weight: bold; cursor: pointer; }
         button.action-btn:hover { opacity: 0.9; }
+        button.stop-btn { background: #ef4444; color: #fff; }
         .result-box {
-            margin-top: 1.5rem; padding: 1.2rem; background: #141414;
+            margin-top: 1rem; padding: 1.2rem; background: #141414;
             border-left: 4px solid var(--accent); border-radius: 4px; font-size: 1.2rem;
         }
+        .player-panel {
+            margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid #333;
+            display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
+        }
+        .bpm-control { display: flex; align-items: center; gap: 0.6rem; }
+        input[type="range"] { accent-color: var(--accent); cursor: pointer; }
+        .beat-dots { display: flex; gap: 0.5rem; }
+        .dot {
+            width: 14px; height: 14px; border-radius: 50%; background: #333; transition: 0.1s;
+        }
+        .dot.active { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
         .guide-list { list-style: none; }
         .guide-list li {
             padding: 1rem; border-bottom: 1px solid #333; display: flex; justify-content: space-between;
@@ -65,33 +78,56 @@
         <p data-en="Practice smarter and dial in iconic guitar tones for free." data-es="Practica mejor y consigue tonos icónicos de guitarra gratis.">Practice smarter and dial in iconic guitar tones for free.</p>
     </section>
 
-    <!-- HERRAMIENTA 1: GENERADOR DE PROGRESIONES -->
     <section class="card">
-        <h2 data-en="🎲 Jam Progression Generator" data-es="🎲 Generador de Progresiones para Improvisar">🎲 Jam Progression Generator</h2>
+        <h2 data-en="🎲 Jam Progression & Backing Track" data-es="🎲 Generador de Progresiones y Base Musical">🎲 Jam Progression & Backing Track</h2>
         <p style="margin-bottom: 1rem; color: var(--muted);" 
-           data-en="Select a genre to get a random chord progression and recommended scale:" 
-           data-es="Elige un estilo para obtener una progresión de acordes y la escala recomendada:">
-           Select a genre to get a random chord progression and recommended scale:
+           data-en="Generate a chord progression and hit Play to jam over a live synth backing track:" 
+           data-es="Genera una progresión de acordes y pulsa Play para improvisar sobre una base musical:">
+           Generate a chord progression and hit Play to jam over a live synth backing track:
         </p>
         
-        <select id="genreSelect">
-            <option value="rock">Classic Rock</option>
-            <option value="blues">Blues</option>
-            <option value="metal">Heavy Metal</option>
-        </select>
-        <button class="action-btn" onclick="generateProgression()" data-en="Generate" data-es="Generar">Generate</button>
+        <div class="controls-row">
+            <select id="genreSelect">
+                <option value="rock">Classic Rock</option>
+                <option value="blues">Blues</option>
+                <option value="metal">Heavy Metal</option>
+            </select>
+            <button class="action-btn" onclick="generateProgression()" data-en="New Progression" data-es="Nueva Progresión">New Progression</button>
+        </div>
 
         <div class="result-box" id="progressionResult">
-            <span data-en="Click 'Generate' to start jamming!" data-es="¡Pulsa 'Generar' para empezar a tocar!">Click 'Generate' to start jamming!</span>
+            <strong>Chords:</strong> A5 - G5 - D5 - A5<br>
+            <small style="color:#f59e0b;">Scale: A Minor Pentatonic</small>
+        </div>
+
+        <div class="player-panel">
+            <div class="controls-row" style="margin-bottom:0;">
+                <button class="action-btn" id="playBtn" onclick="togglePlay()" data-en="▶ Play Backing Track" data-es="▶ Reproducir Base">▶ Play Backing Track</button>
+                <label style="font-size: 0.9rem; color: var(--muted); display: flex; align-items: center; gap: 0.4rem;">
+                    <input type="checkbox" id="metroCheck" checked>
+                    <span data-en="Metronome" data-es="Metrónomo">Metronome</span>
+                </label>
+            </div>
+
+            <div class="bpm-control">
+                <span style="font-size: 0.9rem;">BPM: <strong id="bpmVal" style="color:var(--accent);">100</strong></span>
+                <input type="range" id="bpmSlider" min="60" max="160" value="100" oninput="updateBPM(this.value)">
+            </div>
+
+            <div class="beat-dots">
+                <div class="dot" id="dot0"></div>
+                <div class="dot" id="dot1"></div>
+                <div class="dot" id="dot2"></div>
+                <div class="dot" id="dot3"></div>
+            </div>
         </div>
     </section>
 
-    <!-- SECCIÓN 2: GUÍAS DE SONIDO -->
     <section class="card">
-        <h2 data-en="🎛️ Iconic Tone Guides (Coming Soon)" data-es="🎛️ Guías de Sonido Icónico (Próximamente)">🎛️ Iconic Tone Guides (Coming Soon)</h2>
+        <h2 data-en="🎛️ Iconic Tone Guides (Next Step)" data-es="🎛️ Guías de Sonido Icónico (Siguiente paso)">🎛️ Iconic Tone Guides (Next Step)</h2>
         <ul class="guide-list">
             <li>
-                <span data-en="How to sound like Kurt Cobain (Nirvana) on a budget" data-es="Cómo sonar como Kurt Cobain (Nirvana) con poco presupuesto">How to sound like Kurt Cobain (Nirvana) on a budget</span>
+                <span data-en="How to sound like Kurt Cobain (Nirvana) - Visual Amp Settings" data-es="Cómo sonar como Kurt Cobain (Nirvana) - Ajustes visuales de ampli">How to sound like Kurt Cobain (Nirvana) - Visual Amp Settings</span>
                 <span class="badge">Grunge</span>
             </li>
             <li>
@@ -110,47 +146,6 @@
     <p>© 2026 ToneLab Guitar - b3bebug.github.io</p>
 </footer>
 
-<script>
-    let currentLang = 'en';
-
-    const progressions = {
-        rock: [
-            { chords: "A5 - G5 - D5 - A5", scaleEn: "A Minor Pentatonic", scaleEs: "Pentatónica de La Menor" },
-            { chords: "E - B - C#m - A", scaleEn: "E Major / C# Minor Pentatonic", scaleEs: "Mi Mayor / Pentatónica de Do# Menor" },
-            { chords: "G - D - Em - C", scaleEn: "G Major Scale", scaleEs: "Escala de Sol Mayor" }
-        ],
-        blues: [
-            { chords: "A7 - D7 - A7 - E7 - D7 - A7", scaleEn: "A Blues Scale", scaleEs: "Escala de Blues en La" },
-            { chords: "E7 - A7 - E7 - B7 - A7 - E7", scaleEn: "E Minor Pentatonic", scaleEs: "Pentatónica de Mi Menor" }
-        ],
-        metal: [
-            { chords: "E5 - F5 - G5 - F5", scaleEn: "E Phrygian Dominant", scaleEs: "Mi Frigio Dominante" },
-            { chords: "D5 - Bb5 - C5 - A5", scaleEn: "D Natural Minor", scaleEs: "Re Menor Natural" }
-        ]
-    };
-
-    function generateProgression() {
-        const genre = document.getElementById('genreSelect').value;
-        const list = progressions[genre];
-        const randomItem = list[Math.floor(Math.random() * list.length)];
-        const resultDiv = document.getElementById('progressionResult');
-
-        if (currentLang === 'en') {
-            resultDiv.innerHTML = `<strong>Chords:</strong> ${randomItem.chords}<br><small style="color:#f59e0b;">Scale: ${randomItem.scaleEn}</small>`;
-        } else {
-            resultDiv.innerHTML = `<strong>Acordes:</strong> ${randomItem.chords}<br><small style="color:#f59e0b;">Escala: ${randomItem.scaleEs}</small>`;
-        }
-    }
-
-    function toggleLanguage() {
-        currentLang = currentLang === 'en' ? 'es' : 'en';
-        document.getElementById('langBtn').innerText = currentLang === 'en' ? 'ES / Español' : 'EN / English';
-        
-        document.querySelectorAll('[data-en]').forEach(el => {
-            el.innerText = el.getAttribute(`data-${currentLang}`);
-        });
-    }
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
