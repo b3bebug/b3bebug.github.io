@@ -3,88 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToneLab Music - Practice & Jam Studio</title>
+<title>ToneLab Studio - Practice & Jam Platform</title>
 <style>
-:root{--bg:#121212;--card:#1e1e1e;--accent:#f59e0b;--text:#f3f4f6;--muted:#9ca3af;--border:#333}
+:root{--bg:#f6f2e9;--card:#fffdf9;--accent:#b45309;--accent-light:#fef3c7;--text:#1f2937;--muted:#6b7280;--border:#e2dac8}
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
 body{background:var(--bg);color:var(--text);line-height:1.6}
-header{background:var(--card);padding:1rem 1.5rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;border-bottom:2px solid var(--accent)}
-.logo{font-size:1.3rem;font-weight:bold;color:var(--accent)}
+header{background:var(--card);padding:1rem 1.5rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.logo{display:flex;align-items:center;gap:.6rem;font-size:1.25rem;font-weight:800;color:var(--text);letter-spacing:-.5px}
+.logo span{color:var(--accent)}
 nav{display:flex;gap:.5rem;flex-wrap:wrap}
-.tab-btn{background:#2a2a2a;color:var(--text);border:1px solid var(--border);padding:.45rem .9rem;border-radius:6px;cursor:pointer;font-weight:600;font-size:.9rem}
-.tab-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
-.lang-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:.4rem .8rem;border-radius:6px;cursor:pointer;font-weight:bold}
-.container{max-width:960px;margin:1.5rem auto;padding:0 1rem}
+.tab-btn{background:var(--bg);color:var(--text);border:1px solid var(--border);padding:.5rem .9rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:.4rem;transition:.2s}
+.tab-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.lang-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:.4rem .8rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem}
+.lang-btn:hover{background:var(--accent);color:#fff}
+.container{max-width:960px;margin:1.8rem auto;padding:0 1rem}
 .section{display:none}.section.active{display:block}
-.card{background:var(--card);padding:1.5rem;border-radius:10px;margin-bottom:1.5rem;border:1px solid var(--border)}
-h2{color:var(--accent);margin-bottom:.8rem;font-size:1.4rem}
+.card{background:var(--card);padding:1.6rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,.03)}
+h2{color:var(--text);margin-bottom:.6rem;font-size:1.35rem;display:flex;align-items:center;gap:.5rem}
 .controls{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.2rem}
-select,input[type="number"]{background:#2c2c2c;color:#fff;border:1px solid #444;padding:.5rem .7rem;border-radius:6px;font-size:.95rem}
-button.btn{background:var(--accent);color:#000;border:none;padding:.65rem 1.1rem;border-radius:6px;font-weight:bold;cursor:pointer;font-size:.95rem}
-button.btn.stop{background:#ef4444;color:#fff}
-.bars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:.6rem;margin:1rem 0}
-.bar-box{background:#151515;border:1px solid #333;border-radius:8px;padding:.5rem;text-align:center;transition:.15s}
-.bar-box.playing{border-color:var(--accent);box-shadow:0 0 10px rgba(245,158,11,.4);background:#251f14}
-.bar-num{font-size:.75rem;color:var(--muted);display:block;margin-bottom:.3rem}
-.bar-box select{width:100%;padding:.35rem;font-size:.9rem;text-align:center}
+.controls label{font-size:.9rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:.4rem}
+select,input[type="number"]{background:#fff;color:var(--text);border:1px solid var(--border);padding:.45rem .7rem;border-radius:6px;font-size:.95rem;font-weight:500}
+button.btn{background:var(--accent);color:#fff;border:none;padding:.6rem 1.1rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:.95rem;transition:.15s}
+button.btn:hover{opacity:.92}
+button.btn.sec{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+button.btn.stop{background:#dc2626;color:#fff}
+.bars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem;margin:1rem 0}
+.bar-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.5rem;text-align:center;transition:.15s}
+.bar-box.playing{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 2px rgba(180,83,9,.25)}
+.bar-num{font-size:.75rem;color:var(--muted);font-weight:700;display:block;margin-bottom:.25rem}
+.bar-box select{width:100%;padding:.35rem;font-size:.9rem;text-align:center;background:#fff}
 .player-bar{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
-.dots{display:flex;gap:.4rem}.dot{width:12px;height:12px;border-radius:50%;background:#333}.dot.on{background:var(--accent)}
-.amp-card{background:#161616;border:2px solid #3a3a3a;border-radius:10px;padding:1.2rem;margin-bottom:1.2rem;cursor:pointer;transition:.2s}
+.dots{display:flex;gap:.4rem;align-items:center}.dot{width:11px;height:11px;border-radius:50%;background:#d6cfc0}.dot.on{background:var(--accent);transform:scale(1.15)}
+.amp-card{background:#262320;color:#f5f2eb;border:2px solid #443d36;border-radius:12px;padding:1.2rem;margin-bottom:1.2rem;cursor:pointer;transition:.2s;box-shadow:0 4px 10px rgba(0,0,0,.08)}
 .amp-card:hover{border-color:var(--accent)}
 .amp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.amp-brand{font-weight:900;letter-spacing:1px;color:#fff;background:#2a2a2a;padding:.2rem .7rem;border-radius:4px;border:1px solid #555}
-.knobs-row{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-around;background:#222;padding:1rem;border-radius:8px;border:1px solid #444}
-.knob-unit{text-align:center;width:62px}
-.knob{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle,#444 30%,#111 100%);border:2px solid #777;margin:0 auto .3rem;position:relative}
-.knob-line{width:3px;height:18px;background:var(--accent);position:absolute;top:4px;left:50%;margin-left:-1.5px;transform-origin:bottom center;border-radius:2px}
-.knob-label{font-size:.75rem;color:var(--muted);display:block}.knob-val{font-size:.8rem;font-weight:bold;color:var(--accent)}
-.amp-details{display:none;margin-top:1rem;padding-top:1rem;border-top:1px dashed #444;color:#d1d5db;font-size:.95rem}
+.amp-brand{font-weight:800;letter-spacing:.8px;color:#fbbf24;background:#171513;padding:.25rem .7rem;border-radius:5px;border:1px solid #574e44;font-size:.85rem}
+.knobs-row{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:space-around;background:#1a1816;padding:1rem;border-radius:8px;border:1px solid #3a342e}
+.knob-unit{text-align:center;width:60px}
+.knob{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#4a443e 30%,#141210 100%);border:2px solid #8c8275;margin:0 auto .3rem;position:relative}
+.knob-line{width:3px;height:17px;background:#fbbf24;position:absolute;top:4px;left:50%;margin-left:-1.5px;transform-origin:bottom center;border-radius:2px}
+.knob-label{font-size:.72rem;color:#b8b0a4;display:block}.knob-val{font-size:.8rem;font-weight:bold;color:#fbbf24}
+.amp-details{display:none;margin-top:1rem;padding-top:1rem;border-top:1px dashed #4a443e;color:#e5e0d8;font-size:.95rem;line-height:1.6}
 .amp-card.open .amp-details{display:block}
 footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">🎵 ToneLab Studio</div>
+  <div class="logo">
+    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#b45309"/>
+      <path d="M8 18C10 12 13 12 15 18C17 24 20 24 24 10" stroke="#fffdf9" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="24" cy="10" r="2.2" fill="#fef3c7"/>
+    </svg>
+    ToneLab <span>Studio</span>
+  </div>
   <nav>
-    <button class="tab-btn active" onclick="showTab('jam',this)" data-en="🎹 Jam Studio" data-es="🎹 Estudio Jam">🎹 Jam Studio</button>
-    <button class="tab-btn" onclick="showTab('amps',this)" data-en="🎸 Guitar Amps" data-es="🎸 Amplificadores">🎸 Guitar Amps</button>
-    <button class="tab-btn" onclick="showTab('indie',this)" data-en="🤝 Indie Tracks" data-es="🤝 Pistas Indie">🤝 Indie Tracks</button>
+    <button class="tab-btn active" onclick="showTab('jam',this)">
+      <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <span data-en="Jam Studio" data-es="Estudio Jam">Jam Studio</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('amps',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><circle cx="12" cy="9" r="1.5"/><circle cx="16" cy="9" r="1.5"/><line x1="6" y1="15" x2="18" y2="15"/></svg>
+      <span data-en="Guitar Amps" data-es="Amplificadores">Guitar Amps</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('indie',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span data-en="Indie Tracks" data-es="Pistas Indie">Indie Tracks</span>
+    </button>
   </nav>
   <button class="lang-btn" onclick="toggleLang()" id="lBtn">ES / Español</button>
 </header>
 <div class="container">
-  <!-- SECCIÓN 1: JAM STUDIO (PARA TODOS LOS MÚSICOS) -->
+  <!-- SECCIÓN 1: JAM STUDIO -->
   <section id="sec-jam" class="section active">
     <div class="card">
-      <h2 data-en="🎹 Custom Chord Progression Builder" data-es="🎹 Constructor de Progresiones a Medida">🎹 Custom Chord Progression Builder</h2>
-      <p style="color:var(--muted);margin-bottom:1rem;font-size:.95rem"
-         data-en="Choose up to 32 bars, select the chord for each bar, and jam with bass, drums & rock organ:"
-         data-es="Elige hasta 32 compases, selecciona el acorde de cada compás y toca con bajo, batería y órgano:">
-         Choose up to 32 bars, select the chord for each bar, and jam with bass, drums & rock organ:
+      <h2 data-en="Custom Chord Progression Builder" data-es="Constructor de Progresiones a Medida">Custom Chord Progression Builder</h2>
+      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem"
+         data-en="Set your time signature and bars (up to 32), pick the chord for each bar, and jam with a live band:"
+         data-es="Elige el compás y la duración (hasta 32 compases), selecciona cada acorde y toca con la banda:">
+         Set your time signature and bars (up to 32), pick the chord for each bar, and jam with a live band:
       </p>
       <div class="controls">
-        <label><span data-en="Bars (1-32):" data-es="Compases (1-32):">Bars (1-32):</span>
+        <label><span data-en="Time:" data-es="Compás:">Time:</span>
+          <select id="timeSig" onchange="changeTimeSig()">
+            <option value="4/4" selected>4/4</option>
+            <option value="3/4">3/4</option>
+            <option value="6/8">6/8</option>
+            <option value="9/8">9/8</option>
+            <option value="5/4">5/4</option>
+          </select>
+        </label>
+        <label><span data-en="Bars (1-32):" data-es="N.º Compases (1-32):">Bars (1-32):</span>
           <input type="number" id="barCount" min="1" max="32" value="4" onchange="buildGrid()">
         </label>
-        <button class="btn" style="background:#333;color:#fff" onclick="presetBlues()" data-en="12-Bar Blues Preset" data-es="Plantilla Blues 12 Compases">12-Bar Blues Preset</button>
+        <button class="btn sec" onclick="presetBlues()" data-en="12-Bar Blues" data-es="Blues 12 Compases">12-Bar Blues</button>
       </div>
       <div id="barsGrid" class="bars-grid"></div>
       <div class="player-bar">
         <div class="controls" style="margin:0">
-          <button class="btn" id="pBtn" onclick="togglePlay()" data-en="▶ Play Band" data-es="▶ Tocar Banda">▶ Play Band</button>
-          <label style="font-size:.9rem;color:var(--muted)"><input type="checkbox" id="mChk" checked> <span data-en="Click" data-es="Metrónomo">Click</span></label>
+          <button class="btn" id="pBtn" onclick="togglePlay()" data-en="Play Band" data-es="Tocar Banda">Play Band</button>
+          <label style="font-size:.9rem;color:var(--muted);font-weight:500"><input type="checkbox" id="mChk" checked> <span data-en="Metronome" data-es="Metrónomo">Metronome</span></label>
         </div>
-        <div>BPM: <strong id="bVal" style="color:var(--accent)">100</strong> <input type="range" min="50" max="180" value="100" oninput="setBpm(this.value)"></div>
-        <div class="dots"><div class="dot" id="d0"></div><div class="dot" id="d1"></div><div class="dot" id="d2"></div><div class="dot" id="d3"></div></div>
+        <div style="font-size:.9rem;font-weight:600">BPM: <strong id="bVal" style="color:var(--accent)">100</strong> <input type="range" style="accent-color:var(--accent)" min="50" max="180" value="100" oninput="setBpm(this.value)"></div>
+        <div class="dots" id="dotsBox"></div>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN 2: AMPLIFICADORES VISUALES PARA GUITARRISTAS -->
+  <!-- SECCIÓN 2: AMPLIFICADORES -->
   <section id="sec-amps" class="section">
     <div class="card">
-      <h2 data-en="🎸 Iconic Amp Settings (Click an amp to read guide)" data-es="🎸 Ajustes de Amplificador Icónicos (Haz clic en un ampli)">🎸 Iconic Amp Settings (Click an amp to read guide)</h2>
+      <h2 data-en="Iconic Amp Settings (Click an amp to read guide)" data-es="Ajustes de Amplificador Icónicos (Haz clic en un ampli)">Iconic Amp Settings (Click an amp to read guide)</h2>
       <div id="ampsContainer"></div>
     </div>
   </section>
@@ -92,25 +123,28 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
   <!-- SECCIÓN 3: PISTAS DE ARTISTAS INDEPENDIENTES -->
   <section id="sec-indie" class="section">
     <div class="card">
-      <h2 data-en="🤝 Indie Artists Jam Tracks" data-es="🤝 Pistas de Artistas Emergentes">🤝 Indie Artists Jam Tracks</h2>
-      <p style="color:var(--muted);margin-bottom:1rem"
-         data-en="Are you an independent musician or band? Share your instrumental tracks so musicians worldwide can jam over your music and discover your profile."
-         data-es="¿Eres un músico o banda independiente? Comparte tus pistas instrumentales para que músicos de todo el mundo improvisen encima y descubran tu perfil.">
-         Are you an independent musician or band? Share your instrumental tracks so musicians worldwide can jam over your music and discover your profile.
+      <h2 data-en="Indie Artists Jam Tracks" data-es="Pistas de Artistas Emergentes">Indie Artists Jam Tracks</h2>
+      <p style="color:var(--muted);margin-bottom:1.2rem"
+         data-en="Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music and discover your profile."
+         data-es="¿Eres un músico o banda independiente? Envíanos tus pistas instrumentales con permiso de uso para que músicos de todo el mundo improvisen encima y te descubran.">
+         Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music and discover your profile.
       </p>
-      <div style="background:#151515;padding:1.2rem;border-radius:8px;border:1px solid #333;margin-bottom:1rem">
+      <div style="background:var(--bg);padding:1.2rem;border-radius:10px;border:1px solid var(--border);margin-bottom:1.2rem">
         <strong style="color:var(--accent)" data-en="Featured Community Track:" data-es="Pista Destacada de la Comunidad:">Featured Community Track:</strong>
-        <p style="margin:.4rem 0"><em>"Midnight Echoes (95 BPM - Am)"</em> — <span style="color:var(--muted)">Demo Backing Track</span></p>
-        <button class="btn" onclick="loadDemoTrack()" data-en="Load Chords in Jam Studio" data-es="Cargar Acordes en Estudio Jam">Load Chords in Jam Studio</button>
+        <p style="margin:.4rem 0"><em>"Midnight Echoes (95 BPM - 4/4 - Am)"</em> — <span style="color:var(--muted)">Demo Backing Track</span></p>
+        <button class="btn sec" onclick="loadDemoTrack()" data-en="Load Chords in Jam Studio" data-es="Cargar Acordes en Estudio Jam">Load Chords in Jam Studio</button>
       </div>
-      <a href="mailto:tuemail@://ejemplo.com" class="btn" style="display:inline-block;text-decoration:none"
-         data-en="📩 Submit Your Track & Permission" data-es="📩 Enviar tu Canción y Permiso">📩 Submit Your Track & Permission</a>
+      <a href="mailto:tonelabjam@://gmail.com." 
+         class="btn" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none">
+         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+         <span data-en="Submit Your Track & Permission" data-es="Enviar tu Canción y Permiso">Submit Your Track & Permission</span>
+      </a>
     </div>
   </section>
 </div>
-<footer><p>© 2026 ToneLab Studio - b3bebug.github.io</p></footer>
+<footer><p>© 2026 ToneLab Studio — tonelabjam@gmail.com</p></footer>
 <script>
-let lang='en',play=false,ctx=null,tmr=null,step=0,barIdx=0,bpm=100;
+let lang='en',play=false,ctx=null,tmr=null,step=0,barIdx=0,bpm=100,stepsPerBar=8,isCompound=false;
 const chordDB={
   "C":new Array(130.8,164.8,196.0),"Cm":new Array(130.8,155.6,196.0),"C7":new Array(130.8,164.8,196.0,233.1),
   "D":new Array(146.8,185.0,220.0),"Dm":new Array(146.8,174.6,220.0),"D7":new Array(146.8,185.0,220.0,261.6),
@@ -122,27 +156,32 @@ const chordDB={
   "G5":new Array(98.0,146.8,196.0),"D5":new Array(146.8,220.0,293.7)
 };
 const chordNames=Object.keys(chordDB);
-
 const ampPresets=new Array(
-  {
-    artist:"Kurt Cobain (Nirvana)",amp:"Fender Twin / Mesa Boogie",
-    knobs:new Array({n:"Gain",v:7},{n:"Bass",v:6},{n:"Mid",v:4},{n:"Treble",v:8},{n:"Reverb",v:2}),
-    en:"Use a bridge humbucker pickup. Keep mids slightly scooped and pair a clean amp with a BOSS DS-1 or DS-2 distortion pedal. Add a Small Clone chorus for iconic clean verses.",
-    es:"Usa una pastilla humbucker en el puente. Recorta ligeramente los medios y combina un ampli limpio con un pedal BOSS DS-1 o DS-2. Añade un chorus Small Clone para las estrofas limpias."
-  },
-  {
-    artist:"James Hetfield (Metallica)",amp:"Mesa Boogie Mark IIC+",
-    knobs:new Array({n:"Gain",v:8},{n:"Bass",v:8},{n:"Mid",v:2},{n:"Treble",v:8},{n:"Reverb",v:0}),
-    en:"Classic 'V-Shape' EQ: boost bass and treble aggressively while cutting the mids to 2. Use tight palm-muting on the low E string with zero reverb for maximum punch.",
-    es:"Ecualización clásica en 'V': sube graves y agudos al 8 y recorta los medios al 2. Usa palm-muting firme en la sexta cuerda sin reverb para máxima pegada."
-  },
-  {
-    artist:"John Frusciante (RHCP)",amp:"Marshall Silver Jubilee",
-    knobs:new Array({n:"Gain",v:4},{n:"Bass",v:7},{n:"Mid",v:6},{n:"Treble",v:5},{n:"Reverb",v:3}),
-    en:"Set the amp right on the edge of breakup with a Stratocaster on the neck pickup. Dig in with your pick for grit, or play softly for glassy funk cleans.",
-    es:"Ajusta el ampli justo al borde de la saturación con una Stratocaster en la pastilla del mástil. Toca fuerte para romper el sonido o suave para limpios funk cristalinos."
-  }
+  {artist:"Kurt Cobain (Nirvana)",amp:"Fender Twin / Mesa Boogie",knobs:new Array({n:"Gain",v:7},{n:"Bass",v:6},{n:"Mid",v:4},{n:"Treble",v:8},{n:"Reverb",v:2}),
+   en:"Use a bridge humbucker pickup. Keep mids slightly scooped and pair a clean amp with a BOSS DS-1 or DS-2 distortion pedal. Add a Small Clone chorus for iconic clean verses.",
+   es:"Usa una pastilla humbucker en el puente. Recorta ligeramente los medios y combina un ampli limpio con un pedal BOSS DS-1 o DS-2. Añade un chorus Small Clone para las estrofas limpias."},
+  {artist:"James Hetfield (Metallica)",amp:"Mesa Boogie Mark IIC+",knobs:new Array({n:"Gain",v:8},{n:"Bass",v:8},{n:"Mid",v:2},{n:"Treble",v:8},{n:"Reverb",v:0}),
+   en:"Classic 'V-Shape' EQ: boost bass and treble aggressively while cutting the mids to 2. Use tight palm-muting on the low E string with zero reverb for maximum punch.",
+   es:"Ecualización clásica en 'V': sube graves y agudos al 8 y recorta los medios al 2. Usa palm-muting firme en la sexta cuerda sin reverb para máxima pegada."},
+  {artist:"John Frusciante (RHCP)",amp:"Marshall Silver Jubilee",knobs:new Array({n:"Gain",v:4},{n:"Bass",v:7},{n:"Mid",v:6},{n:"Treble",v:5},{n:"Reverb",v:3}),
+   en:"Set the amp right on the edge of breakup with a Stratocaster on the neck pickup. Dig in with your pick for grit, or play softly for glassy funk cleans.",
+   es:"Ajusta el ampli justo al borde de la saturación con una Stratocaster en la pastilla del mástil. Toca fuerte para romper el sonido o suave para limpios funk cristalinos."}
 );
+
+function changeTimeSig(){
+  const sig=document.getElementById('timeSig').value;
+  isCompound=(sig==='6/8'||sig==='9/8');
+  if(sig==='4/4')stepsPerBar=8;
+  else if(sig==='3/4')stepsPerBar=6;
+  else if(sig==='5/4')stepsPerBar=10;
+  else if(sig==='6/8')stepsPerBar=6;
+  else if(sig==='9/8')stepsPerBar=9;
+  const dotCount=isCompound?(stepsPerBar/3):(stepsPerBar/2);
+  const box=document.getElementById('dotsBox');
+  box.innerHTML='';
+  for(let i=0;i<dotCount;i++)box.innerHTML+=`<div class="dot" id="d${i}"></div>`;
+  if(play){clearInterval(tmr);step=0;tmr=setInterval(tick,((60/bpm)/2)*1000);}
+}
 
 function buildGrid(presetArr){
   let count=parseInt(document.getElementById('barCount').value)||4;
@@ -162,7 +201,74 @@ function buildGrid(presetArr){
   }
 }
 
-function presetBlues(){
+function presetBlues(){document.getElementById('barCount').value=12;buildGrid(new Array("A7","A7","A7","A7","D7","D7","A7","A7","E7","D7","A7","E7"));}
+function loadDemoTrack(){document.getElementById('timeSig').value='4/4';changeTimeSig();document.getElementById('barCount').value=8;buildGrid(new Array("Am","Em","F","G","Am","Em","Dm","E7"));setBpm(95);showTab('jam',document.querySelector('.tab-btn'));}
+
+function renderAmps(){
+  const box=document.getElementById('ampsContainer');box.innerHTML='';
+  ampPresets.forEach(item=>{
+    const card=document.createElement('div');card.className='amp-card';card.onclick=function(){this.classList.toggle('open');};
+    let knobsHtml='';
+    item.knobs.forEach(k=>{const deg=-135+(k.v*27);knobsHtml+=`<div class="knob-unit"><div class="knob"><div class="knob-line" style="transform:rotate(${deg}deg)"></div></div><span class="knob-label">${k.n}</span><span class="knob-val">${k.v}</span></div>`;});
+    card.innerHTML=`<div class="amp-header"><strong>${item.artist}</strong><span class="amp-brand">${item.amp}</span></div><div class="knobs-row">${knobsHtml}</div><div class="amp-details" data-en="${item.en}" data-es="${item.es}">${lang==='en'?item.en:item.es}</div>`;
+    box.appendChild(card);
+  });
+}
+
+function showTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');btn.classList.add('active');
+}
+
+function unlockAudio(){const AC=window.AudioContext||window.webkitAudioContext;if(!ctx)ctx=new AC();if(ctx.state==='suspended')ctx.resume();}
+
+function playOrgan(fs,dur){
+  const t=ctx.currentTime,flt=ctx.createBiquadFilter();flt.type='lowpass';flt.frequency.setValueAtTime(1400,t);flt.connect(ctx.destination);
+  fs.forEach(f=>{new Array(1,2).forEach((m,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=i===0?'sawtooth':'sine';o.frequency.setValueAtTime(f*m,t);g.gain.setValueAtTime(0.001,t);g.gain.linearRampToValueAtTime(i===0?0.04:0.025,t+0.04);g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur);});});
+}
+
+function playBass(f,dur){const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';o.frequency.setValueAtTime(f/2,t);g.gain.setValueAtTime(0.24,t);g.gain.exponentialRampToValueAtTime(0.01,t+dur);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+dur);}
+
+function playDrum(type){
+  const t=ctx.currentTime;
+  if(type==='k'){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+0.12);g.gain.setValueAtTime(0.45,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.25);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.25);}
+  else{const len=Math.floor(ctx.sampleRate*(type==='s'?0.16:0.04)),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;const n=ctx.createBufferSource(),flt=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=buf;flt.type='highpass';flt.frequency.setValueAtTime(type==='s'?900:6000,t);g.gain.setValueAtTime(type==='s'?0.22:0.07,t);g.gain.exponentialRampToValueAtTime(0.001,t+(type==='s'?0.16:0.04));n.connect(flt);flt.connect(g);g.connect(ctx.destination);n.start(t);}
+}
+
+function playClick(acc){const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(acc?1000:600,t);g.gain.setValueAtTime(0.08,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.05);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.05);}
+
+function tick(){
+  const totalBars=parseInt(document.getElementById('barCount').value)||4;
+  if(barIdx>=totalBars)barIdx=0;
+  const d8=(60/bpm)/2,div=isCompound?3:2,beat=Math.floor(step/div),dotCount=stepsPerBar/div;
+  if(step%div===0){
+    for(let i=0;i<dotCount;i++){const el=document.getElementById('d'+i);if(el)el.classList.toggle('on',i===beat);}
+    if(document.getElementById('mChk').checked)playClick(beat===0);
+  }
+  const sel=document.getElementById('sel-'+barIdx),cName=sel?sel.value:'Am',ns=chordDB[cName]||new Array(110);
+  if(step===0){document.querySelectorAll('.bar-box').forEach(b=>b.classList.remove('playing'));const ab=document.getElementById('bar-'+barIdx);if(ab)ab.classList.add('playing');playOrgan(ns,d8*(stepsPerBar-0.3));}
+  if(step%div===0||step===stepsPerBar-1)playBass(ns.at(0),d8*0.9);
+  playDrum('h');
+  if(step===0||(!isCompound&&step===4)||(isCompound&&step===6))playDrum('k');
+  if((!isCompound&&(step===2||step===6))||(isCompound&&step===3))playDrum('s');
+  step++;if(step>=stepsPerBar){step=0;barIdx=(barIdx+1)%totalBars;}
+}
+
+function togglePlay(){
+  unlockAudio();const b=document.getElementById('pBtn');
+  if(play){clearInterval(tmr);play=false;b.classList.remove('stop');b.innerText=lang==='en'?'Play Band':'Tocar Banda';document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on'));document.querySelectorAll('.bar-box').forEach(box=>box.classList.remove('playing'));}
+  else{play=true;step=0;barIdx=0;b.classList.add('stop');b.innerText=lang==='en'?'Stop':'Detener';tick();tmr=setInterval(tick,((60/bpm)/2)*1000);}
+}
+
+function setBpm(v){bpm=v;document.getElementById('bVal').innerText=v;if(play){clearInterval(tmr);tmr=setInterval(tick,((60/bpm)/2)*1000);}}
+function toggleLang(){lang=lang==='en'?'es':'en';document.getElementById('lBtn').innerText=lang==='en'?'ES / Español':'EN / English';document.querySelectorAll('[data-en]').forEach(e=>e.innerText=e.getAttribute('data-'+lang));document.getElementById('pBtn').innerText=play?(lang==='en'?'Stop':'Detener'):(lang==='en'?'Play Band':'Tocar Banda');}
+
+changeTimeSig();buildGrid();renderAmps();
+</script>
+</body>
+</html>
+
   document.getElementById('barCount').value=12;
   buildGrid(new Array("A7","A7","A7","A7","D7","D7","A7","A7","E7","D7","A7","E7"));
 }
