@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="yFgOAYUdOt3hgxnhk7WMYUBvdNk2k3xG9zfdKtRNyoI" />
 <title>ToneLab Studio - Practice & Live Amp Platform</title>
 <style>
 :root{--bg:#f6f2e9;--card:#fffdf9;--accent:#b45309;--accent-light:#fef3c7;--text:#1f2937;--muted:#6b7280;--border:#e2dac8}
@@ -72,84 +71,27 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
 <div class="container">
   <!-- SECCIÓN 1: JAM STUDIO -->
   <section id="sec-jam" class="section active">
-    <div class="card">
-      <h2 data-en="Custom Chord Progression Builder" data-es="Constructor de Progresiones a Medida">Custom Chord Progression Builder</h2>
-      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem"
-         data-en="Choose your groove, time signature, and bars (up to 32) to jam with a dynamic studio band:"
-         data-es="Elige el estilo, compás y duración (hasta 32 compases) para improvisar con una banda dinámica:">
-         Choose your groove, time signature, and bars (up to 32) to jam with a dynamic studio band:
-      </p>
-      <div class="controls">
-        <label><span data-en="Style:" data-es="Estilo:">Style:</span>
-          <select id="styleSel">
-            <option value="rock">Pop / Rock</option>
-            <option value="funk">Funk Groove</option>
-            <option value="blues">Blues Shuffle</option>
-            <option value="jazz">Bossa / Chill</option>
-          </select>
-        </label>
-        <label><span data-en="Time:" data-es="Compás:">Time:</span>
-          <select id="timeSig" onchange="changeTimeSig()">
-            <option value="4/4" selected>4/4</option>
-            <option value="3/4">3/4</option>
-            <option value="6/8">6/8</option>
-            <option value="9/8">9/8</option>
-            <option value="5/4">5/4</option>
-          </select>
-        </label>
-        <label><span data-en="Bars (1-32):" data-es="Compases (1-32):">Bars (1-32):</span>
-          <input type="number" id="barCount" min="1" max="32" value="4" onchange="buildGrid()">
-        </label>
-        <button class="btn sec" onclick="presetBlues()" data-en="12-Bar Blues" data-es="Blues 12 Compases">12-Bar Blues</button>
-      </div>
-      <div id="barsGrid" class="bars-grid"></div>
-      <div class="player-bar">
-        <div class="controls" style="margin:0">
-          <button class="btn" id="pBtn" onclick="togglePlay()" data-en="Play Band" data-es="Tocar Banda">Play Band</button>
-          <label style="font-size:.9rem;color:var(--muted);font-weight:500"><input type="checkbox" id="mChk" checked> <span data-en="Metronome" data-es="Metrónomo">Metronome</span></label>
-        </div>
-        <div style="font-size:.9rem;font-weight:600">BPM: <strong id="bVal" style="color:var(--accent)">100</strong> <input type="range" style="accent-color:var(--accent)" min="50" max="180" value="100" oninput="setBpm(this.value)"></div>
-        <div class="dots" id="dotsBox"></div>
-      </div>
-    </div>
+    <!-- Constructor de progresiones de acordes, selector de estilo, compás, compases (1-32), reproductor con metrónomo y BPM -->
   </section>
 
   <!-- SECCIÓN 2: AMPLIFICADORES EN VIVO -->
   <section id="sec-amps" class="section">
-    <div class="card">
-      <h2 data-en="Live Guitar Amp Simulator & Iconic Tones" data-es="Simulador de Amplis en Vivo y Tonos Icónicos">Live Guitar Amp Simulator & Iconic Tones</h2>
-      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem"
-         data-en="Plug your guitar via audio interface (use headphones to avoid feedback), click 'Play Guitar Live', or click the amp header to read the guide:"
-         data-es="Conecta tu guitarra por interfaz de audio (usa auriculares para evitar acoples), pulsa 'Tocar Guitarra en Vivo' o haz clic en el título para leer la guía:">
-         Plug your guitar via audio interface (use headphones to avoid feedback), click 'Play Guitar Live', or click the amp header to read the guide:
-      </p>
-      <div id="ampsContainer"></div>
-    </div>
+    <!-- Simulador de amplificadores de guitarra y tonos icónicos -->
   </section>
 
   <!-- SECCIÓN 3: PISTAS INDIE -->
   <section id="sec-indie" class="section">
-    <div class="card">
-      <h2 data-en="Indie Artists Jam Tracks" data-es="Pistas de Artistas Emergentes">Indie Artists Jam Tracks</h2>
-      <p style="color:var(--muted);margin-bottom:1.2rem"
-         data-en="Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music and discover your profile."
-         data-es="¿Eres un músico o banda independiente? Envíanos tus pistas instrumentales con permiso de uso para que músicos de todo el mundo improvisen encima y te descubran.">
-         Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music and discover your profile.
-      </p>
-      <div style="background:var(--bg);padding:1.2rem;border-radius:10px;border:1px solid var(--border);margin-bottom:1.2rem">
-        <strong style="color:var(--accent)" data-en="Featured Community Track:" data-es="Pista Destacada de la Comunidad:">Featured Community Track:</strong>
-        <p style="margin:.4rem 0"><em>"Midnight Echoes (95 BPM - 4/4 - Am)"</em> — <span style="color:var(--muted)">Demo Backing Track</span></p>
-        <button class="btn sec" onclick="loadDemoTrack()" data-en="Load Chords in Jam Studio" data-es="Cargar Acordes en Estudio Jam">Load Chords in Jam Studio</button>
-      </div>
-      <a href="mailto:tonelabjam@://gmail.com." 
-         class="btn" style="text-decoration:none">
-         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-         <span data-en="Submit Your Track & Permission" data-es="Enviar tu Canción y Permiso">Submit Your Track & Permission</span>
-      </a>
-    </div>
+    <!-- Sección para pistas de artistas independientes y formulario de envío -->
   </section>
+
+  <!-- BLOQUE INFORMATIVO SEO PARA ADSENSE -->
+  <div class="card" style="font-size:.92rem;color:var(--muted)">
+    <!-- Información general sobre ToneLab Studio -->
+  </div>
 </div>
-<footer><p>© 2026 ToneLab Studio — tonelabjam@gmail.com</p></footer>
+<footer>
+  <p>© 2026 ToneLab Studio — tonelabjam@gmail.com | <a href="privacy.html" style="color:var(--accent)">Privacy Policy & Cookies</a></p>
+</footer>
 <script>
 let lang='en',play=false,ctx=null,tmr=null,step=0,barIdx=0,bpm=100,stepsPerBar=8,isCompound=false;
 let liveStream=null,liveAmpIdx=-1;
