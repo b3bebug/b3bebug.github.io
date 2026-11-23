@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToneLab Studio - Practice & Jam Platform</title>
+<title>ToneLab Studio - Practice & Live Amp Platform</title>
 <style>
 :root{--bg:#f6f2e9;--card:#fffdf9;--accent:#b45309;--accent-light:#fef3c7;--text:#1f2937;--muted:#6b7280;--border:#e2dac8}
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
 body{background:var(--bg);color:var(--text);line-height:1.6}
 header{background:var(--card);padding:1rem 1.5rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.03)}
-.logo{display:flex;align-items:center;gap:.6rem;font-size:1.25rem;font-weight:800;color:var(--text);letter-spacing:-.5px}
+.logo{display:flex;align-items:center;gap:.65rem;font-size:1.25rem;font-weight:800;color:var(--text);letter-spacing:-.5px}
 .logo span{color:var(--accent)}
 nav{display:flex;gap:.5rem;flex-wrap:wrap}
 .tab-btn{background:var(--bg);color:var(--text);border:1px solid var(--border);padding:.5rem .9rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:.4rem;transition:.2s}
@@ -24,10 +24,11 @@ h2{color:var(--text);margin-bottom:.6rem;font-size:1.35rem;display:flex;align-it
 .controls{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.2rem}
 .controls label{font-size:.9rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:.4rem}
 select,input[type="number"]{background:#fff;color:var(--text);border:1px solid var(--border);padding:.45rem .7rem;border-radius:6px;font-size:.95rem;font-weight:500}
-button.btn{background:var(--accent);color:#fff;border:none;padding:.6rem 1.1rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:.95rem;transition:.15s}
+button.btn{background:var(--accent);color:#fff;border:none;padding:.6rem 1.1rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:.92rem;transition:.15s;display:inline-flex;align-items:center;gap:.4rem}
 button.btn:hover{opacity:.92}
 button.btn.sec{background:var(--bg);color:var(--text);border:1px solid var(--border)}
 button.btn.stop{background:#dc2626;color:#fff}
+button.btn.live-on{background:#16a34a;color:#fff}
 .bars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem;margin:1rem 0}
 .bar-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.5rem;text-align:center;transition:.15s}
 .bar-box.playing{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 2px rgba(180,83,9,.25)}
@@ -35,15 +36,15 @@ button.btn.stop{background:#dc2626;color:#fff}
 .bar-box select{width:100%;padding:.35rem;font-size:.9rem;text-align:center;background:#fff}
 .player-bar{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
 .dots{display:flex;gap:.4rem;align-items:center}.dot{width:11px;height:11px;border-radius:50%;background:#d6cfc0}.dot.on{background:var(--accent);transform:scale(1.15)}
-.amp-card{background:#262320;color:#f5f2eb;border:2px solid #443d36;border-radius:12px;padding:1.2rem;margin-bottom:1.2rem;cursor:pointer;transition:.2s;box-shadow:0 4px 10px rgba(0,0,0,.08)}
-.amp-card:hover{border-color:var(--accent)}
-.amp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.amp-brand{font-weight:800;letter-spacing:.8px;color:#fbbf24;background:#171513;padding:.25rem .7rem;border-radius:5px;border:1px solid #574e44;font-size:.85rem}
+.amp-card{background:#262320;color:#f5f2eb;border:2px solid #443d36;border-radius:12px;padding:1.2rem;margin-bottom:1.2rem;transition:.2s;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.amp-header{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;align-items:center;margin-bottom:1rem;cursor:pointer}
+.amp-brand{font-weight:800;letter-spacing:.8px;color:#fbbf24;background:#171513;padding:.25rem .7rem;border-radius:5px;border:1px solid #574e44;font-size:.82rem}
 .knobs-row{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:space-around;background:#1a1816;padding:1rem;border-radius:8px;border:1px solid #3a342e}
-.knob-unit{text-align:center;width:60px}
-.knob{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#4a443e 30%,#141210 100%);border:2px solid #8c8275;margin:0 auto .3rem;position:relative}
+.knob-unit{text-align:center;width:64px}
+.knob{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#4a443e 30%,#141210 100%);border:2px solid #8c8275;margin:0 auto .3rem;position:relative;cursor:ns-resize}
 .knob-line{width:3px;height:17px;background:#fbbf24;position:absolute;top:4px;left:50%;margin-left:-1.5px;transform-origin:bottom center;border-radius:2px}
 .knob-label{font-size:.72rem;color:#b8b0a4;display:block}.knob-val{font-size:.8rem;font-weight:bold;color:#fbbf24}
+.amp-actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-top:.9rem}
 .amp-details{display:none;margin-top:1rem;padding-top:1rem;border-top:1px dashed #4a443e;color:#e5e0d8;font-size:.95rem;line-height:1.6}
 .amp-card.open .amp-details{display:block}
 footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
@@ -52,10 +53,11 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
 <body>
 <header>
   <div class="logo">
-    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-      <rect width="32" height="32" rx="8" fill="#b45309"/>
-      <path d="M8 18C10 12 13 12 15 18C17 24 20 24 24 10" stroke="#fffdf9" stroke-width="2.6" stroke-linecap="round"/>
-      <circle cx="24" cy="10" r="2.2" fill="#fef3c7"/>
+    <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="18" r="17" fill="#b45309"/>
+      <circle cx="18" cy="18" r="14.5" stroke="#fef3c7" stroke-opacity="0.35" stroke-width="1"/>
+      <path d="M9 20C11.5 13 14.5 13 17 20C19.5 27 22.5 27 27 12" stroke="#fffdf9" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="27" cy="12" r="2.3" fill="#fef3c7"/>
     </svg>
     ToneLab <span>Studio</span>
   </div>
@@ -66,7 +68,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
     </button>
     <button class="tab-btn" onclick="showTab('amps',this)">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><circle cx="12" cy="9" r="1.5"/><circle cx="16" cy="9" r="1.5"/><line x1="6" y1="15" x2="18" y2="15"/></svg>
-      <span data-en="Guitar Amps" data-es="Amplificadores">Guitar Amps</span>
+      <span data-en="Live Guitar Amps" data-es="Amplis en Vivo">Live Guitar Amps</span>
     </button>
     <button class="tab-btn" onclick="showTab('indie',this)">
       <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -81,9 +83,9 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
     <div class="card">
       <h2 data-en="Custom Chord Progression Builder" data-es="Constructor de Progresiones a Medida">Custom Chord Progression Builder</h2>
       <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem"
-         data-en="Set your time signature and bars (up to 32), pick the chord for each bar, and jam with a live band:"
-         data-es="Elige el compás y la duración (hasta 32 compases), selecciona cada acorde y toca con la banda:">
-         Set your time signature and bars (up to 32), pick the chord for each bar, and jam with a live band:
+         data-en="Set your time signature and bars (up to 32), pick the chord for each bar, and jam with a warm studio band:"
+         data-es="Elige el compás y la duración (hasta 32 compases), selecciona cada acorde y toca con una banda de estudio realista:">
+         Set your time signature and bars (up to 32), pick the chord for each bar, and jam with a warm studio band:
       </p>
       <div class="controls">
         <label><span data-en="Time:" data-es="Compás:">Time:</span>
@@ -112,10 +114,15 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
     </div>
   </section>
 
-  <!-- SECCIÓN 2: AMPLIFICADORES -->
+  <!-- SECCIÓN 2: AMPLIFICADORES CON PROCESADOR EN VIVO -->
   <section id="sec-amps" class="section">
     <div class="card">
-      <h2 data-en="Iconic Amp Settings (Click an amp to read guide)" data-es="Ajustes de Amplificador Icónicos (Haz clic en un ampli)">Iconic Amp Settings (Click an amp to read guide)</h2>
+      <h2 data-en="Live Guitar Amp Simulator & Iconic Tones" data-es="Simulador de Amplis en Vivo y Tonos Icónicos">Live Guitar Amp Simulator & Iconic Tones</h2>
+      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem"
+         data-en="Plug your guitar via audio interface (use headphones to avoid feedback), click 'Play Guitar Live' on any amp, or click the amp header to read the tone guide:"
+         data-es="Conecta tu guitarra por interfaz de audio (usa auriculares para evitar acoples), pulsa 'Tocar Guitarra en Vivo' en cualquier ampli o haz clic en el título para leer la guía:">
+         Plug your guitar via audio interface (use headphones to avoid feedback), click 'Play Guitar Live' on any amp, or click the amp header to read the tone guide:
+      </p>
       <div id="ampsContainer"></div>
     </div>
   </section>
@@ -135,7 +142,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
         <button class="btn sec" onclick="loadDemoTrack()" data-en="Load Chords in Jam Studio" data-es="Cargar Acordes en Estudio Jam">Load Chords in Jam Studio</button>
       </div>
       <a href="mailto:tonelabjam@://gmail.com." 
-         class="btn" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none">
+         class="btn" style="text-decoration:none">
          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
          <span data-en="Submit Your Track & Permission" data-es="Enviar tu Canción y Permiso">Submit Your Track & Permission</span>
       </a>
@@ -145,6 +152,8 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
 <footer><p>© 2026 ToneLab Studio — tonelabjam@gmail.com</p></footer>
 <script>
 let lang='en',play=false,ctx=null,tmr=null,step=0,barIdx=0,bpm=100,stepsPerBar=8,isCompound=false;
+let liveStream=null,liveAmpIdx=-1;
+
 const chordDB={
   "C":new Array(130.8,164.8,196.0),"Cm":new Array(130.8,155.6,196.0),"C7":new Array(130.8,164.8,196.0,233.1),
   "D":new Array(146.8,185.0,220.0),"Dm":new Array(146.8,174.6,220.0),"D7":new Array(146.8,185.0,220.0,261.6),
@@ -156,26 +165,31 @@ const chordDB={
   "G5":new Array(98.0,146.8,196.0),"D5":new Array(146.8,220.0,293.7)
 };
 const chordNames=Object.keys(chordDB);
-const ampPresets=new Array(
-  {artist:"Kurt Cobain (Nirvana)",amp:"Fender Twin / Mesa Boogie",knobs:new Array({n:"Gain",v:7},{n:"Bass",v:6},{n:"Mid",v:4},{n:"Treble",v:8},{n:"Reverb",v:2}),
-   en:"Use a bridge humbucker pickup. Keep mids slightly scooped and pair a clean amp with a BOSS DS-1 or DS-2 distortion pedal. Add a Small Clone chorus for iconic clean verses.",
-   es:"Usa una pastilla humbucker en el puente. Recorta ligeramente los medios y combina un ampli limpio con un pedal BOSS DS-1 o DS-2. Añade un chorus Small Clone para las estrofas limpias."},
-  {artist:"James Hetfield (Metallica)",amp:"Mesa Boogie Mark IIC+",knobs:new Array({n:"Gain",v:8},{n:"Bass",v:8},{n:"Mid",v:2},{n:"Treble",v:8},{n:"Reverb",v:0}),
-   en:"Classic 'V-Shape' EQ: boost bass and treble aggressively while cutting the mids to 2. Use tight palm-muting on the low E string with zero reverb for maximum punch.",
-   es:"Ecualización clásica en 'V': sube graves y agudos al 8 y recorta los medios al 2. Usa palm-muting firme en la sexta cuerda sin reverb para máxima pegada."},
-  {artist:"John Frusciante (RHCP)",amp:"Marshall Silver Jubilee",knobs:new Array({n:"Gain",v:4},{n:"Bass",v:7},{n:"Mid",v:6},{n:"Treble",v:5},{n:"Reverb",v:3}),
-   en:"Set the amp right on the edge of breakup with a Stratocaster on the neck pickup. Dig in with your pick for grit, or play softly for glassy funk cleans.",
-   es:"Ajusta el ampli justo al borde de la saturación con una Stratocaster en la pastilla del mástil. Toca fuerte para romper el sonido o suave para limpios funk cristalinos."}
-);
 
+const ampPresets=new Array(
+  {
+    artist:"Kurt Cobain (Nirvana)",amp:"Fender Twin / DS-2",
+    knobs:new Array({n:"Gain",v:7},{n:"Bass",v:6},{n:"Mid",v:4},{n:"Treble",v:8},{n:"Reverb",v:2}),
+    en:"Bridge humbucker pickup. Keep mids slightly scooped and pair a clean amp with a BOSS DS-1/DS-2 distortion pedal. Add chorus for clean verses.",
+    es:"Pastilla humbucker en el puente. Recorta ligeramente los medios y combina un ampli limpio con pedal BOSS DS-1/DS-2. Añade chorus en estrofas limpias."
+  },
+  {
+    artist:"James Hetfield (Metallica)",amp:"Mesa Boogie Mark IIC+",
+    knobs:new Array({n:"Gain",v:9},{n:"Bass",v:8},{n:"Mid",v:2},{n:"Treble",v:8},{n:"Reverb",v:0}),
+    en:"Classic 'V-Shape' EQ: boost bass and treble aggressively while cutting mids to 2. Use tight palm-muting on the low E string.",
+    es:"Ecualización clásica en 'V': sube graves y agudos al 8 y recorta los medios al 2. Usa palm-muting firme en la sexta cuerda."
+  },
+  {
+    artist:"John Frusciante (RHCP)",amp:"Marshall Silver Jubilee",
+    knobs:new Array({n:"Gain",v:4},{n:"Bass",v:7},{n:"Mid",v:6},{n:"Treble",v:5},{n:"Reverb",v:3}),
+    en:"Set right on the edge of breakup with a Stratocaster neck pickup. Dig in for grit, or play softly for glassy funk cleans.",
+    es:"Ajusta el ampli al borde de la saturación con Stratocaster en pastilla del mástil. Toca fuerte para romper o suave para limpios funk."
+  }
+);
 function changeTimeSig(){
   const sig=document.getElementById('timeSig').value;
   isCompound=(sig==='6/8'||sig==='9/8');
-  if(sig==='4/4')stepsPerBar=8;
-  else if(sig==='3/4')stepsPerBar=6;
-  else if(sig==='5/4')stepsPerBar=10;
-  else if(sig==='6/8')stepsPerBar=6;
-  else if(sig==='9/8')stepsPerBar=9;
+  stepsPerBar=sig==='4/4'?8:sig==='3/4'?6:sig==='5/4'?10:sig==='6/8'?6:9;
   const dotCount=isCompound?(stepsPerBar/3):(stepsPerBar/2);
   const box=document.getElementById('dotsBox');
   box.innerHTML='';
@@ -201,79 +215,13 @@ function buildGrid(presetArr){
   }
 }
 
-function presetBlues(){document.getElementById('barCount').value=12;buildGrid(new Array("A7","A7","A7","A7","D7","D7","A7","A7","E7","D7","A7","E7"));}
-function loadDemoTrack(){document.getElementById('timeSig').value='4/4';changeTimeSig();document.getElementById('barCount').value=8;buildGrid(new Array("Am","Em","F","G","Am","Em","Dm","E7"));setBpm(95);showTab('jam',document.querySelector('.tab-btn'));}
-
-function renderAmps(){
-  const box=document.getElementById('ampsContainer');box.innerHTML='';
-  ampPresets.forEach(item=>{
-    const card=document.createElement('div');card.className='amp-card';card.onclick=function(){this.classList.toggle('open');};
-    let knobsHtml='';
-    item.knobs.forEach(k=>{const deg=-135+(k.v*27);knobsHtml+=`<div class="knob-unit"><div class="knob"><div class="knob-line" style="transform:rotate(${deg}deg)"></div></div><span class="knob-label">${k.n}</span><span class="knob-val">${k.v}</span></div>`;});
-    card.innerHTML=`<div class="amp-header"><strong>${item.artist}</strong><span class="amp-brand">${item.amp}</span></div><div class="knobs-row">${knobsHtml}</div><div class="amp-details" data-en="${item.en}" data-es="${item.es}">${lang==='en'?item.en:item.es}</div>`;
-    box.appendChild(card);
-  });
-}
-
-function showTab(id,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sec-'+id).classList.add('active');btn.classList.add('active');
-}
-
-function unlockAudio(){const AC=window.AudioContext||window.webkitAudioContext;if(!ctx)ctx=new AC();if(ctx.state==='suspended')ctx.resume();}
-
-function playOrgan(fs,dur){
-  const t=ctx.currentTime,flt=ctx.createBiquadFilter();flt.type='lowpass';flt.frequency.setValueAtTime(1400,t);flt.connect(ctx.destination);
-  fs.forEach(f=>{new Array(1,2).forEach((m,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=i===0?'sawtooth':'sine';o.frequency.setValueAtTime(f*m,t);g.gain.setValueAtTime(0.001,t);g.gain.linearRampToValueAtTime(i===0?0.04:0.025,t+0.04);g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur);});});
-}
-
-function playBass(f,dur){const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';o.frequency.setValueAtTime(f/2,t);g.gain.setValueAtTime(0.24,t);g.gain.exponentialRampToValueAtTime(0.01,t+dur);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+dur);}
-
-function playDrum(type){
-  const t=ctx.currentTime;
-  if(type==='k'){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+0.12);g.gain.setValueAtTime(0.45,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.25);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.25);}
-  else{const len=Math.floor(ctx.sampleRate*(type==='s'?0.16:0.04)),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;const n=ctx.createBufferSource(),flt=ctx.createBiquadFilter(),g=ctx.createGain();n.buffer=buf;flt.type='highpass';flt.frequency.setValueAtTime(type==='s'?900:6000,t);g.gain.setValueAtTime(type==='s'?0.22:0.07,t);g.gain.exponentialRampToValueAtTime(0.001,t+(type==='s'?0.16:0.04));n.connect(flt);flt.connect(g);g.connect(ctx.destination);n.start(t);}
-}
-
-function playClick(acc){const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(acc?1000:600,t);g.gain.setValueAtTime(0.08,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.05);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.05);}
-
-function tick(){
-  const totalBars=parseInt(document.getElementById('barCount').value)||4;
-  if(barIdx>=totalBars)barIdx=0;
-  const d8=(60/bpm)/2,div=isCompound?3:2,beat=Math.floor(step/div),dotCount=stepsPerBar/div;
-  if(step%div===0){
-    for(let i=0;i<dotCount;i++){const el=document.getElementById('d'+i);if(el)el.classList.toggle('on',i===beat);}
-    if(document.getElementById('mChk').checked)playClick(beat===0);
-  }
-  const sel=document.getElementById('sel-'+barIdx),cName=sel?sel.value:'Am',ns=chordDB[cName]||new Array(110);
-  if(step===0){document.querySelectorAll('.bar-box').forEach(b=>b.classList.remove('playing'));const ab=document.getElementById('bar-'+barIdx);if(ab)ab.classList.add('playing');playOrgan(ns,d8*(stepsPerBar-0.3));}
-  if(step%div===0||step===stepsPerBar-1)playBass(ns.at(0),d8*0.9);
-  playDrum('h');
-  if(step===0||(!isCompound&&step===4)||(isCompound&&step===6))playDrum('k');
-  if((!isCompound&&(step===2||step===6))||(isCompound&&step===3))playDrum('s');
-  step++;if(step>=stepsPerBar){step=0;barIdx=(barIdx+1)%totalBars;}
-}
-
-function togglePlay(){
-  unlockAudio();const b=document.getElementById('pBtn');
-  if(play){clearInterval(tmr);play=false;b.classList.remove('stop');b.innerText=lang==='en'?'Play Band':'Tocar Banda';document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on'));document.querySelectorAll('.bar-box').forEach(box=>box.classList.remove('playing'));}
-  else{play=true;step=0;barIdx=0;b.classList.add('stop');b.innerText=lang==='en'?'Stop':'Detener';tick();tmr=setInterval(tick,((60/bpm)/2)*1000);}
-}
-
-function setBpm(v){bpm=v;document.getElementById('bVal').innerText=v;if(play){clearInterval(tmr);tmr=setInterval(tick,((60/bpm)/2)*1000);}}
-function toggleLang(){lang=lang==='en'?'es':'en';document.getElementById('lBtn').innerText=lang==='en'?'ES / Español':'EN / English';document.querySelectorAll('[data-en]').forEach(e=>e.innerText=e.getAttribute('data-'+lang));document.getElementById('pBtn').innerText=play?(lang==='en'?'Stop':'Detener'):(lang==='en'?'Play Band':'Tocar Banda');}
-
-changeTimeSig();buildGrid();renderAmps();
-</script>
-</body>
-</html>
-
+function presetBlues(){
   document.getElementById('barCount').value=12;
   buildGrid(new Array("A7","A7","A7","A7","D7","D7","A7","A7","E7","D7","A7","E7"));
 }
 
 function loadDemoTrack(){
+  document.getElementById('timeSig').value='4/4';changeTimeSig();
   document.getElementById('barCount').value=8;
   buildGrid(new Array("Am","Em","F","G","Am","Em","Dm","E7"));
   setBpm(95);
@@ -283,18 +231,50 @@ function loadDemoTrack(){
 function renderAmps(){
   const box=document.getElementById('ampsContainer');
   box.innerHTML='';
-  ampPresets.forEach(item=>{
+  ampPresets.forEach((item,idx)=>{
     const card=document.createElement('div');
     card.className='amp-card';
-    card.onclick=function(){this.classList.toggle('open');};
     let knobsHtml='';
     item.knobs.forEach(k=>{
       const deg=-135+(k.v*27);
       knobsHtml+=`<div class="knob-unit"><div class="knob"><div class="knob-line" style="transform:rotate(${deg}deg)"></div></div><span class="knob-label">${k.n}</span><span class="knob-val">${k.v}</span></div>`;
     });
-    card.innerHTML=`<div class="amp-header"><strong>${item.artist}</strong><span class="amp-brand">${item.amp}</span></div><div class="knobs-row">${knobsHtml}</div><div class="amp-details" data-en="${item.en}" data-es="${item.es}">${lang==='en'?item.en:item.es}</div>`;
+    const isThisLive=(liveAmpIdx===idx);
+    const liveTxt=isThisLive?(lang==='en'?'Stop Guitar':'Detener Guitarra'):(lang==='en'?'Play Guitar Live':'Tocar Guitarra en Vivo');
+    card.innerHTML=`<div class="amp-header" onclick="this.parentElement.classList.toggle('open')"><strong>${item.artist}</strong><span class="amp-brand">${item.amp}</span></div><div class="knobs-row">${knobsHtml}</div><div class="amp-actions"><button class="btn ${isThisLive?'live-on':'sec'}" onclick="toggleLiveAmp(${idx})">${liveTxt}</button><span style="font-size:.82rem;color:#b8b0a4;cursor:pointer" onclick="this.parentElement.parentElement.classList.toggle('open')" data-en="Read Tone Guide ▾" data-es="Leer Guía de Tono ▾">${lang==='en'?'Read Tone Guide ▾':'Leer Guía de Tono ▾'}</span></div><div class="amp-details" data-en="${item.en}" data-es="${item.es}">${lang==='en'?item.en:item.es}</div>`;
     box.appendChild(card);
   });
+}
+function makeDistortionCurve(amount){
+  const k=amount*35,n=44100,curve=new Float32Array(n);
+  for(let i=0;i<n;i++){
+    const x=i*2/n-1;
+    curve[i]=(3+k)*x*20*(Math.PI/180)/(Math.PI+k*Math.abs(x));
+  }
+  return curve;
+}
+
+async function toggleLiveAmp(idx){
+  unlockAudio();
+  if(liveStream){liveStream.getTracks().forEach(t=>t.stop());liveStream=null;}
+  if(liveAmpIdx===idx){liveAmpIdx=-1;renderAmps();return;}
+  try{
+    liveStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    const src=ctx.createMediaStreamSource(liveStream);
+    const preset=ampPresets.at(idx).knobs;
+    const gainVal=preset.at(0).v,bassVal=preset.at(1).v,midVal=preset.at(2).v,trebVal=preset.at(3).v;
+    const pre=ctx.createGain();pre.gain.value=1+(gainVal*0.8);
+    const shaper=ctx.createWaveShaper();shaper.curve=makeDistortionCurve(gainVal);shaper.oversample='4x';
+    const bass=ctx.createBiquadFilter();bass.type='lowshelf';bass.frequency.value=140;bass.gain.value=(bassVal-5)*2.5;
+    const mid=ctx.createBiquadFilter();mid.type='peaking';mid.frequency.value=750;mid.Q.value=1.2;mid.gain.value=(midVal-5)*2.8;
+    const treb=ctx.createBiquadFilter();treb.type='highshelf';treb.frequency.value=2800;treb.gain.value=(trebVal-5)*2.5;
+    const cab=ctx.createBiquadFilter();cab.type='lowpass';cab.frequency.value=4200;
+    const master=ctx.createGain();master.gain.value=0.35;
+    src.connect(pre);pre.connect(shaper);shaper.connect(bass);bass.connect(mid);mid.connect(treb);treb.connect(cab);cab.connect(master);master.connect(ctx.destination);
+    liveAmpIdx=idx;renderAmps();
+  }catch(e){
+    alert(lang==='en'?'Allow microphone/interface access to play guitar live.':'Permite el acceso al micrófono/interfaz para tocar la guitarra en vivo.');
+  }
 }
 
 function showTab(id,btn){
@@ -305,109 +285,92 @@ function showTab(id,btn){
 }
 
 function unlockAudio(){
-  const AudioContext=window.AudioContext||window.webkitAudioContext;
-  if(!ctx)ctx=new AudioContext();
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!ctx)ctx=new AC();
   if(ctx.state==='suspended')ctx.resume();
 }
-
-function playOrgan(fs,dur){
+function playWarmKeys(fs,dur){
   const t=ctx.currentTime,flt=ctx.createBiquadFilter();
-  flt.type='lowpass';flt.frequency.setValueAtTime(1400,t);flt.connect(ctx.destination);
+  flt.type='lowpass';flt.frequency.setValueAtTime(1150,t);flt.connect(ctx.destination);
   fs.forEach(f=>{
-    new Array(1,2).forEach((m,i)=>{
+    new Array(-4,4).forEach(det=>{
       const o=ctx.createOscillator(),g=ctx.createGain();
-      o.type=i===0?'sawtooth':'sine';o.frequency.setValueAtTime(f*m,t);
-      g.gain.setValueAtTime(0.001,t);g.gain.linearRampToValueAtTime(i===0?0.04:0.025,t+0.04);
-      g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur);
+      o.type='triangle';o.frequency.setValueAtTime(f,t);o.detune.setValueAtTime(det,t);
+      g.gain.setValueAtTime(0.001,t);g.gain.linearRampToValueAtTime(0.045,t+0.05);
+      g.gain.setValueAtTime(0.035,t+dur*0.6);g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+      o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur);
     });
   });
 }
 
-function playBass(f,dur){
-  const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
-  o.type='triangle';o.frequency.setValueAtTime(f/2,t);
-  g.gain.setValueAtTime(0.24,t);g.gain.exponentialRampToValueAtTime(0.01,t+dur);
-  o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+dur);
+function playFatBass(f,dur){
+  const t=ctx.currentTime,sub=ctx.createOscillator(),body=ctx.createOscillator(),flt=ctx.createBiquadFilter(),g=ctx.createGain();
+  sub.type='sine';sub.frequency.setValueAtTime(f/2,t);body.type='sawtooth';body.frequency.setValueAtTime(f/2,t);
+  flt.type='lowpass';flt.frequency.setValueAtTime(520,t);flt.frequency.exponentialRampToValueAtTime(180,t+dur);
+  g.gain.setValueAtTime(0.28,t);g.gain.exponentialRampToValueAtTime(0.01,t+dur);
+  sub.connect(g);body.connect(flt);flt.connect(g);g.connect(ctx.destination);
+  sub.start(t);body.start(t);sub.stop(t+dur);body.stop(t+dur);
 }
 
-function playDrum(type){
+function playRealDrum(type,accent){
   const t=ctx.currentTime;
   if(type==='k'){
     const o=ctx.createOscillator(),g=ctx.createGain();
-    o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+0.12);
-    g.gain.setValueAtTime(0.45,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.25);
-    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.25);
+    o.frequency.setValueAtTime(155,t);o.frequency.exponentialRampToValueAtTime(38,t+0.14);
+    g.gain.setValueAtTime(0.55,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.28);
+    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.28);
   }else{
-    const len=Math.floor(ctx.sampleRate*(type==='s'?0.16:0.04));
-    const buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
+    const len=Math.floor(ctx.sampleRate*(type==='s'?0.2:0.05)),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
     for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
     const n=ctx.createBufferSource(),flt=ctx.createBiquadFilter(),g=ctx.createGain();
-    n.buffer=buf;flt.type='highpass';flt.frequency.setValueAtTime(type==='s'?900:6000,t);
-    g.gain.setValueAtTime(type==='s'?0.22:0.07,t);g.gain.exponentialRampToValueAtTime(0.001,t+(type==='s'?0.16:0.04));
+    n.buffer=buf;flt.type=type==='s'?'bandpass':'highpass';flt.frequency.setValueAtTime(type==='s'?1200:7500,t);
+    g.gain.setValueAtTime(type==='s'?0.32:(accent?0.11:0.05),t);g.gain.exponentialRampToValueAtTime(0.001,t+(type==='s'?0.2:0.05));
     n.connect(flt);flt.connect(g);g.connect(ctx.destination);n.start(t);
   }
 }
 
 function playClick(acc){
   const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
-  o.frequency.setValueAtTime(acc?1000:600,t);g.gain.setValueAtTime(0.08,t);
+  o.frequency.setValueAtTime(acc?980:580,t);g.gain.setValueAtTime(0.07,t);
   g.gain.exponentialRampToValueAtTime(0.001,t+0.05);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.05);
 }
 
 function tick(){
-  const totalBars=parseInt(document.getElementById('barCount').value)||4;
-  if(barIdx>=totalBars)barIdx=0;
-  const d8=(60/bpm)/2,beat=Math.floor(step/2);
-  if(step%2===0){
-    for(let i=0;i<4;i++)document.getElementById('d'+i).classList.toggle('on',i===beat);
+  const totalBars=parseInt(document.getElementById('barCount').value)||4;if(barIdx>=totalBars)barIdx=0;
+  const d8=(60/bpm)/2,div=isCompound?3:2,beat=Math.floor(step/div),dotCount=stepsPerBar/div;
+  if(step%div===0){
+    for(let i=0;i<dotCount;i++){const el=document.getElementById('d'+i);if(el)el.classList.toggle('on',i===beat);}
     if(document.getElementById('mChk').checked)playClick(beat===0);
   }
-  const sel=document.getElementById('sel-'+barIdx);
-  const cName=sel?sel.value:'Am';
-  const ns=chordDB[cName]||new Array(110);
+  const sel=document.getElementById('sel-'+barIdx),cName=sel?sel.value:'Am',ns=chordDB[cName]||new Array(110);
   if(step===0){
     document.querySelectorAll('.bar-box').forEach(b=>b.classList.remove('playing'));
-    const activeBox=document.getElementById('bar-'+barIdx);
-    if(activeBox)activeBox.classList.add('playing');
-    playOrgan(ns,d8*7.6);
+    const ab=document.getElementById('bar-'+barIdx);if(ab)ab.classList.add('playing');
+    playWarmKeys(ns,d8*(stepsPerBar-0.2));
   }
-  if(new Array(0,2,3,4,6).includes(step))playBass(ns.at(0),d8*0.9);
-  playDrum('h');
-  if(step===0||step===4||step===5)playDrum('k');
-  if(step===2||step===6)playDrum('s');
-  step++;
-  if(step>=8){step=0;barIdx=(barIdx+1)%totalBars;}
+  if(step%div===0||step===stepsPerBar-1)playFatBass(ns.at(0),d8*0.95);
+  playRealDrum('h',step%div===0);
+  if(step===0||(!isCompound&&step===4)||(isCompound&&step===6))playRealDrum('k',true);
+  if((!isCompound&&(step===2||step===6))||(isCompound&&step===3))playRealDrum('s',true);
+  step++;if(step>=stepsPerBar){step=0;barIdx=(barIdx+1)%totalBars;}
 }
 
 function togglePlay(){
-  unlockAudio();
-  const b=document.getElementById('pBtn');
+  unlockAudio();const b=document.getElementById('pBtn');
   if(play){
-    clearInterval(tmr);play=false;b.classList.remove('stop');
-    b.innerText=lang==='en'?'▶ Play Band':'▶ Tocar Banda';
-    for(let i=0;i<4;i++)document.getElementById('d'+i).classList.remove('on');
+    clearInterval(tmr);play=false;b.classList.remove('stop');b.innerText=lang==='en'?'Play Band':'Tocar Banda';
+    document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on'));
     document.querySelectorAll('.bar-box').forEach(box=>box.classList.remove('playing'));
   }else{
-    play=true;step=0;barIdx=0;b.classList.add('stop');
-    b.innerText=lang==='en'?'⏹ Stop':'⏹ Detener';
+    play=true;step=0;barIdx=0;b.classList.add('stop');b.innerText=lang==='en'?'Stop':'Detener';
     tick();tmr=setInterval(tick,((60/bpm)/2)*1000);
   }
 }
 
-function setBpm(v){
-  bpm=v;document.getElementById('bVal').innerText=v;
-  if(play){clearInterval(tmr);tmr=setInterval(tick,((60/bpm)/2)*1000);}
-}
+function setBpm(v){bpm=v;document.getElementById('bVal').innerText=v;if(play){clearInterval(tmr);tmr=setInterval(tick,((60/bpm)/2)*1000);}}
+function toggleLang(){lang=lang==='en'?'es':'en';document.getElementById('lBtn').innerText=lang==='en'?'ES / Español':'EN / English';document.querySelectorAll('[data-en]').forEach(e=>e.innerText=e.getAttribute('data-'+lang));document.getElementById('pBtn').innerText=play?(lang==='en'?'Stop':'Detener'):(lang==='en'?'Play Band':'Tocar Banda');renderAmps();}
 
-function toggleLang(){
-  lang=lang==='en'?'es':'en';
-  document.getElementById('lBtn').innerText=lang==='en'?'ES / Español':'EN / English';
-  document.querySelectorAll('[data-en]').forEach(e=>e.innerText=e.getAttribute('data-'+lang));
-  document.getElementById('pBtn').innerText=play?(lang==='en'?'⏹ Stop':'⏹ Detener'):(lang==='en'?'▶ Play Band':'▶ Tocar Banda');
-}
-
-buildGrid();
-renderAmps();
+changeTimeSig();buildGrid();renderAmps();
 </script>
 </body>
 </html>
