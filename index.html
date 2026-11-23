@@ -122,3 +122,38 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
       <div class="fret-wrap"><div id="fretboard" class="fretboard"></div><div id="fretNums" class="fret-nums"></div></div>
     </div>
   </section>
+  <section id="sec-amps" class="section">
+    <div class="card">
+      <h2 data-en="Live Guitar Amp Simulator & Iconic Tones" data-es="Simulador de Amplis en Vivo y Tonos Icónicos">Live Guitar Amp Simulator & Iconic Tones</h2>
+      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem" data-en="Plug your guitar via audio interface (use headphones), click 'Play Guitar Live', or click the amp header to read the guide:" data-es="Conecta tu guitarra por interfaz de audio (usa auriculares), pulsa 'Tocar Guitarra en Vivo' o haz clic en el título para leer la guía:">Plug your guitar via audio interface (use headphones), click 'Play Guitar Live', or click the amp header to read the guide:</p>
+      <div id="ampsContainer"></div>
+    </div>
+  </section>
+  <section id="sec-indie" class="section">
+    <div class="card">
+      <h2 data-en="Indie Artists Jam Tracks" data-es="Pistas de Artistas Emergentes">Indie Artists Jam Tracks</h2>
+      <p style="color:var(--muted);margin-bottom:1.2rem" data-en="Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music." data-es="¿Eres un músico o banda independiente? Envíanos tus pistas instrumentales con permiso para que músicos de todo el mundo improvisen encima.">Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music.</p>
+      <div style="background:var(--bg);padding:1.2rem;border-radius:10px;border:1px solid var(--border);margin-bottom:1.2rem">
+        <strong style="color:var(--accent)" data-en="Featured Track:" data-es="Pista Destacada:">Featured Track:</strong>
+        <p style="margin:.4rem 0"><em>"Midnight Echoes (95 BPM - 4/4 - Am)"</em></p>
+        <button class="btn sec" onclick="loadDemoTrack()" data-en="Load in Jam Studio" data-es="Cargar en Estudio Jam">Load in Jam Studio</button>
+      </div>
+      <button class="btn" onclick="submitIndie()" data-en="Submit Your Track & Permission" data-es="Enviar tu Canción y Permiso">Submit Your Track & Permission</button>
+    </div>
+  </section>
+  <div class="card" style="font-size:.92rem;color:var(--muted)">
+    <h2 style="font-size:1.15rem" data-en="Practice & Tone Guides" data-es="Guías de Práctica y Sonido">Practice & Tone Guides</h2>
+    <h3 data-en="How to Improvise Over Chord Progressions" data-es="Cómo improvisar sobre progresiones de acordes">How to Improvise Over Chord Progressions</h3>
+    <p data-en="Identify the key center in Jam Studio, open the Fretboard tab to visualize the Minor Pentatonic or Blues scale, and target the red root notes on strong beats." data-es="Identifica la tonalidad en el Estudio Jam, abre la pestaña Mástil para ver la escala Pentatónica Menor o de Blues y cae en las notas tónicas rojas en los tiempos fuertes.">Identify the key center in Jam Studio, open the Fretboard tab to visualize the Minor Pentatonic or Blues scale, and target the red root notes on strong beats.</p>
+    <h3 data-en="Dialing In Classic Amp EQ" data-es="Cómo ecualizar un amplificador paso a paso">Dialing In Classic Amp EQ</h3>
+    <p data-en="Start with Bass, Middle, and Treble at 5. Scoop mids for heavy metal punch, or boost mids and keep gain moderate for classic rock and blues clarity." data-es="Empieza con Graves, Medios y Agudos al 5. Recorta medios para pegada metal, o súbelos con ganancia moderada para claridad en rock clásico y blues.">Start with Bass, Middle, and Treble at 5. Scoop mids for heavy metal punch, or boost mids and keep gain moderate for classic rock and blues clarity.</p>
+  </div>
+</div>
+<footer>
+  <p>© 2026 ToneLab Studio — tonelabjam@gmail.com | <a href="privacy.html" style="color:var(--accent)">Privacy Policy & Cookies</a></p>
+</footer>
+<script src="amps.js"></script>
+<script src="fretboard.js"></script>
+<script src="band.js"></script>
+</body>
+</html>
