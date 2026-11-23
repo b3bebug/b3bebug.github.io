@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToneLab Studio - Practice & Live Amp Platform</title>
+<title>ToneLab Studio - Practice, Fretboard & Live Amp Platform</title>
 <style>
 :root{--bg:#f6f2e9;--card:#fffdf9;--accent:#b45309;--accent-light:#fef3c7;--text:#1f2937;--muted:#6b7280;--border:#e2dac8}
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
@@ -11,9 +11,9 @@ body{background:var(--bg);color:var(--text);line-height:1.6}
 header{background:var(--card);padding:1rem 1.5rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.03)}
 .logo{display:flex;align-items:center;gap:.65rem;font-size:1.25rem;font-weight:800;color:var(--text);letter-spacing:-.5px}
 .logo span{color:var(--accent)}
-nav{display:flex;gap:.5rem;flex-wrap:wrap}
-.tab-btn{background:var(--bg);color:var(--text);border:1px solid var(--border);padding:.5rem .9rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:.4rem;transition:.2s}
-.tab-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+nav{display:flex;gap:.45rem;flex-wrap:wrap}
+.tab-btn{background:var(--bg);color:var(--text);border:1px solid var(--border);padding:.45rem .85rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:.88rem;display:flex;align-items:center;gap:.4rem;transition:.2s}
+.tab-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
 .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .lang-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:.4rem .8rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem}
 .lang-btn:hover{background:var(--accent);color:#fff}
@@ -21,6 +21,7 @@ nav{display:flex;gap:.5rem;flex-wrap:wrap}
 .section{display:none}.section.active{display:block}
 .card{background:var(--card);padding:1.6rem;border-radius:12px;margin-bottom:1.5rem;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,.03)}
 h2{color:var(--text);margin-bottom:.6rem;font-size:1.35rem;display:flex;align-items:center;gap:.5rem}
+h3{color:var(--accent);margin:1rem 0 .4rem;font-size:1.05rem}
 .controls{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.2rem}
 .controls label{font-size:.9rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:.4rem}
 select,input[type="number"]{background:#fff;color:var(--text);border:1px solid var(--border);padding:.45rem .7rem;border-radius:6px;font-size:.95rem;font-weight:500}
@@ -47,23 +48,26 @@ button.btn.live-on{background:#16a34a;color:#fff}
 .amp-actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;margin-top:.9rem}
 .amp-details{display:none;margin-top:1rem;padding-top:1rem;border-top:1px dashed #4a443e;color:#e5e0d8;font-size:.95rem;line-height:1.6}
 .amp-card.open .amp-details{display:block}
+.fret-wrap{overflow-x:auto;padding:1rem 0}
+.fretboard{display:grid;grid-template-columns:45px repeat(12,minmax(46px,1fr));background:#3b281c;border:3px solid #24170f;border-radius:8px;min-width:620px}
+.fret-cell{height:34px;border-right:2px solid #9ca3af;border-bottom:1px solid #d1d5db;display:flex;align-items:center;justify-content:center;position:relative}
+.fret-cell.nut{background:#1f1610;border-right:5px solid #f5f2eb}
+.note-dot{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.4)}
+.note-dot.root{background:#dc2626;border:2px solid #fef3c7}
+.fret-nums{display:grid;grid-template-columns:45px repeat(12,minmax(46px,1fr));text-align:center;font-size:.75rem;color:var(--muted);font-weight:700;margin-top:.3rem;min-width:620px}
 footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">
-    <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
-      <circle cx="18" cy="18" r="17" fill="#b45309"/>
-      <circle cx="18" cy="18" r="14.5" stroke="#fef3c7" stroke-opacity="0.35" stroke-width="1"/>
-      <path d="M9 20C11.5 13 14.5 13 17 20C19.5 27 22.5 27 27 12" stroke="#fffdf9" stroke-width="2.6" stroke-linecap="round"/>
-      <circle cx="27" cy="12" r="2.3" fill="#fef3c7"/>
-    </svg>
+    <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17" fill="#b45309"/><circle cx="18" cy="18" r="14.5" stroke="#fef3c7" stroke-opacity="0.35" stroke-width="1"/><path d="M9 20C11.5 13 14.5 13 17 20C19.5 27 22.5 27 27 12" stroke="#fffdf9" stroke-width="2.6" stroke-linecap="round"/><circle cx="27" cy="12" r="2.3" fill="#fef3c7"/></svg>
     ToneLab <span>Studio</span>
   </div>
   <nav>
     <button class="tab-btn active" onclick="showTab('jam',this)"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span data-en="Jam Studio" data-es="Estudio Jam">Jam Studio</span></button>
-    <button class="tab-btn" onclick="showTab('amps',this)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><circle cx="12" cy="9" r="1.5"/><circle cx="16" cy="9" r="1.5"/><line x1="6" y1="15" x2="18" y2="15"/></svg><span data-en="Live Guitar Amps" data-es="Amplis en Vivo">Live Guitar Amps</span></button>
+    <button class="tab-btn" onclick="showTab('fret',this)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="7" y1="6" x2="7" y2="18"/><line x1="12" y1="6" x2="12" y2="18"/><line x1="17" y1="6" x2="17" y2="18"/></svg><span data-en="Fretboard" data-es="Mástil">Fretboard</span></button>
+    <button class="tab-btn" onclick="showTab('amps',this)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><circle cx="12" cy="9" r="1.5"/><circle cx="16" cy="9" r="1.5"/><line x1="6" y1="15" x2="18" y2="15"/></svg><span data-en="Live Amps" data-es="Amplis en Vivo">Live Amps</span></button>
     <button class="tab-btn" onclick="showTab('indie',this)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span data-en="Indie Tracks" data-es="Pistas Indie">Indie Tracks</span></button>
   </nav>
   <button class="lang-btn" onclick="toggleLang()" id="lBtn">ES / Español</button>
@@ -96,234 +100,41 @@ footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
       </div>
     </div>
   </section>
-  <section id="sec-amps" class="section">
+  <section id="sec-fret" class="section">
     <div class="card">
-      <h2 data-en="Live Guitar Amp Simulator & Iconic Tones" data-es="Simulador de Amplis en Vivo y Tonos Icónicos">Live Guitar Amp Simulator & Iconic Tones</h2>
-      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem" data-en="Plug your guitar via audio interface (use headphones to avoid feedback), click 'Play Guitar Live', or click the amp header to read the guide:" data-es="Conecta tu guitarra por interfaz de audio (usa auriculares para evitar acoples), pulsa 'Tocar Guitarra en Vivo' o haz clic en el título para leer la guía:">Plug your guitar via audio interface (use headphones to avoid feedback), click 'Play Guitar Live', or click the amp header to read the guide:</p>
-      <div id="ampsContainer"></div>
+      <h2 data-en="Interactive Guitar Fretboard (Scales & Chords)" data-es="Mástil Interactivo de Guitarra (Escalas y Acordes)">Interactive Guitar Fretboard (Scales & Chords)</h2>
+      <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.95rem" data-en="Select a root note and scale or chord arpeggio to visualize every note across the neck (Red = Root note):" data-es="Elige una nota tónica y una escala o arpegio para ver cada nota en el mástil (Rojo = Nota tónica):">Select a root note and scale or chord arpeggio to visualize every note across the neck (Red = Root note):</p>
+      <div class="controls">
+        <label><span data-en="Root:" data-es="Tónica:">Root:</span>
+          <select id="rootNote" onchange="drawFretboard()">
+            <option value="0">C</option><option value="1">C# / Db</option><option value="2">D</option><option value="3">D# / Eb</option>
+            <option value="4">E</option><option value="5">F</option><option value="6">F# / Gb</option><option value="7">G</option>
+            <option value="8">G# / Ab</option><option value="9" selected>A</option><option value="10">A# / Bb</option><option value="11">B</option>
+          </select>
+        </label>
+        <label><span data-en="Pattern:" data-es="Escala / Acorde:">Pattern:</span>
+          <select id="scaleType" onchange="drawFretboard()">
+            <option value="minPent" selected>Minor Pentatonic</option><option value="blues">Blues Scale</option><option value="majPent">Major Pentatonic</option>
+            <option value="major">Major Scale (Ionian)</option><option value="minor">Natural Minor (Aeolian)</option><option value="majChord">Major Triad</option><option value="minChord">Minor Triad</option>
+          </select>
+        </label>
+      </div>
+      <div class="fret-wrap"><div id="fretboard" class="fretboard"></div><div id="fretNums" class="fret-nums"></div></div>
     </div>
+  </section>
+  <section id="sec-amps" class="section">
+    <!-- Simulador de Amplis e interfaz -->
   </section>
   <section id="sec-indie" class="section">
-    <div class="card">
-      <h2 data-en="Indie Artists Jam Tracks" data-es="Pistas de Artistas Emergentes">Indie Artists Jam Tracks</h2>
-      <p style="color:var(--muted);margin-bottom:1.2rem" data-en="Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music and discover your profile." data-es="¿Eres un músico o banda independiente? Envíanos tus pistas instrumentales con permiso de uso para que músicos de todo el mundo improvisen encima y te descubran.">Are you an independent musician or band? Share your instrumental tracks with permission so musicians worldwide can jam over your music and discover your profile.</p>
-      <div style="background:var(--bg);padding:1.2rem;border-radius:10px;border:1px solid var(--border);margin-bottom:1.2rem">
-        <strong style="color:var(--accent)" data-en="Featured Community Track:" data-es="Pista Destacada de la Comunidad:">Featured Community Track:</strong>
-        <p style="margin:.4rem 0"><em>"Midnight Echoes (95 BPM - 4/4 - Am)"</em> — <span style="color:var(--muted)">Demo Backing Track</span></p>
-        <button class="btn sec" onclick="loadDemoTrack()" data-en="Load Chords in Jam Studio" data-es="Cargar Acordes en Estudio Jam">Load Chords in Jam Studio</button>
-      </div>
-      <a href="mailto:tonelabjam@://gmail.com." class="btn" style="text-decoration:none">
-        <span data-en="Submit Your Track & Permission" data-es="Enviar tu Canción y Permiso">Submit Your Track & Permission</span>
-      </a>
-    </div>
+    <!-- Pistas de artistas independientes y botón submitIndie() -->
   </section>
-  <div class="card" style="font-size:.92rem;color:var(--muted)">
-    <h2 style="font-size:1.15rem" data-en="About ToneLab Studio" data-es="Sobre ToneLab Studio">About ToneLab Studio</h2>
-    <p data-en="ToneLab Studio is a free web-based practice suite for musicians, guitarists, bassists, and songwriters. Build custom chord progressions up to 32 bars across multiple time signatures (4/4, 3/4, 6/8, 9/8, 5/4), practice with dynamic backing grooves, and dial in classic guitar amp tones in real time." data-es="ToneLab Studio es una plataforma gratuita de práctica musical para guitarristas, bajistas y compositores. Crea progresiones de hasta 32 compases en distintos compases musicales, improvisa con estilos dinámicos y prueba amplificadores de guitarra en tiempo real.">ToneLab Studio is a free web-based practice suite for musicians, guitarists, bassists, and songwriters. Build custom chord progressions up to 32 bars across multiple time signatures (4/4, 3/4, 6/8, 9/8, 5/4), practice with dynamic backing grooves, and dial in classic guitar amp tones in real time.</p>
+  <div class="card">
+    <!-- Guías de práctica, improvisación y ecualización -->
   </div>
 </div>
 <footer>
   <p>© 2026 ToneLab Studio — tonelabjam@gmail.com | <a href="privacy.html" style="color:var(--accent)">Privacy Policy & Cookies</a></p>
 </footer>
-<script>
-let lang='en',play=false,ctx=null,tmr=null,step=0,barIdx=0,bpm=100,stepsPerBar=8,isCompound=false;
-let liveStream=null,liveAmpIdx=-1;
-
-const chordDB={
-  "C":new Array(130.8,164.8,196.0),"Cm":new Array(130.8,155.6,196.0),"C7":new Array(130.8,164.8,196.0,233.1),
-  "D":new Array(146.8,185.0,220.0),"Dm":new Array(146.8,174.6,220.0),"D7":new Array(146.8,185.0,220.0,261.6),
-  "E":new Array(82.4,103.8,123.5),"Em":new Array(82.4,98.0,123.5),"E7":new Array(82.4,103.8,123.5,146.8),
-  "F":new Array(87.3,110.0,130.8),"Fm":new Array(87.3,103.8,130.8),"G":new Array(98.0,123.5,146.8),
-  "Gm":new Array(98.0,116.5,146.8),"G7":new Array(98.0,123.5,146.8,174.6),"A":new Array(110.0,138.6,164.8),
-  "Am":new Array(110.0,130.8,164.8),"A7":new Array(110.0,138.6,164.8,196.0),"B":new Array(123.5,155.6,185.0),
-  "Bm":new Array(123.5,146.8,185.0),"A5":new Array(110.0,164.8,220.0),"E5":new Array(82.4,123.5,164.8),
-  "G5":new Array(98.0,146.8,196.0),"D5":new Array(146.8,220.0,293.7)
-};
-const chordNames=Object.keys(chordDB);
-
-const ampPresets=new Array(
-  {
-    artist:"Kurt Cobain (Nirvana)",amp:"Fender Twin / DS-2",
-    knobs:new Array({n:"Gain",v:7},{n:"Bass",v:6},{n:"Mid",v:4},{n:"Treble",v:8},{n:"Reverb",v:2}),
-    en:"Bridge humbucker pickup. Keep mids slightly scooped and pair a clean amp with a BOSS DS-1/DS-2 distortion pedal. Add chorus for clean verses.",
-    es:"Pastilla humbucker en el puente. Recorta ligeramente los medios y combina un ampli limpio con pedal BOSS DS-1/DS-2. Añade chorus en estrofas limpias."
-  },
-  {
-    artist:"James Hetfield (Metallica)",amp:"Mesa Boogie Mark IIC+",
-    knobs:new Array({n:"Gain",v:9},{n:"Bass",v:8},{n:"Mid",v:2},{n:"Treble",v:8},{n:"Reverb",v:0}),
-    en:"Classic 'V-Shape' EQ: boost bass and treble aggressively while cutting mids to 2. Use tight palm-muting on the low E string.",
-    es:"Ecualización clásica en 'V': sube graves y agudos al 8 y recorta los medios al 2. Usa palm-muting firme en la sexta cuerda."
-  },
-  {
-    artist:"John Frusciante (RHCP)",amp:"Marshall Silver Jubilee",
-    knobs:new Array({n:"Gain",v:4},{n:"Bass",v:7},{n:"Mid",v:6},{n:"Treble",v:5},{n:"Reverb",v:3}),
-    en:"Set right on the edge of breakup with a Stratocaster neck pickup. Dig in for grit, or play softly for glassy funk cleans.",
-    es:"Ajusta el ampli al borde de la saturación con Stratocaster en pastilla del mástil. Toca fuerte para romper o suave para limpios funk."
-  }
-);
-function changeTimeSig(){
-  const sig=document.getElementById('timeSig').value;
-  isCompound=(sig==='6/8'||sig==='9/8');
-  stepsPerBar=sig==='4/4'?8:sig==='3/4'?6:sig==='5/4'?10:sig==='6/8'?6:9;
-  const dotCount=isCompound?(stepsPerBar/3):(stepsPerBar/2);
-  const box=document.getElementById('dotsBox');box.innerHTML='';
-  for(let i=0;i<dotCount;i++)box.innerHTML+=`<div class="dot" id="d${i}"></div>`;
-  if(play){clearInterval(tmr);step=0;tmr=setInterval(tick,((60/bpm)/2)*1000);}
-}
-
-function buildGrid(presetArr){
-  let count=parseInt(document.getElementById('barCount').value)||4;
-  if(count<1)count=1;if(count>32)count=32;
-  document.getElementById('barCount').value=count;
-  const grid=document.getElementById('barsGrid');grid.innerHTML='';
-  const defaults=presetArr||new Array("Am","F","C","G");
-  for(let i=0;i<count;i++){
-    const div=document.createElement('div');div.className='bar-box';div.id='bar-'+i;
-    const defChord=defaults.at(i%defaults.length);
-    let opts='';
-    chordNames.forEach(cn=>{opts+=`<option value="${cn}" ${cn===defChord?'selected':''}>${cn}</option>`;});
-    div.innerHTML=`<span class="bar-num">#${i+1}</span><select id="sel-${i}">${opts}</select>`;
-    grid.appendChild(div);
-  }
-}
-
-function presetBlues(){document.getElementById('barCount').value=12;buildGrid(new Array("A7","A7","A7","A7","D7","D7","A7","A7","E7","D7","A7","E7"));}
-function loadDemoTrack(){document.getElementById('timeSig').value='4/4';changeTimeSig();document.getElementById('barCount').value=8;buildGrid(new Array("Am","Em","F","G","Am","Em","Dm","E7"));setBpm(95);showTab('jam',document.querySelector('.tab-btn'));}
-
-function renderAmps(){
-  const box=document.getElementById('ampsContainer');box.innerHTML='';
-  ampPresets.forEach((item,idx)=>{
-    const card=document.createElement('div');card.className='amp-card';
-    let knobsHtml='';
-    item.knobs.forEach(k=>{const deg=-135+(k.v*27);knobsHtml+=`<div class="knob-unit"><div class="knob"><div class="knob-line" style="transform:rotate(${deg}deg)"></div></div><span class="knob-label">${k.n}</span><span class="knob-val">${k.v}</span></div>`;});
-    const isThisLive=(liveAmpIdx===idx);
-    const liveTxt=isThisLive?(lang==='en'?'Stop Guitar':'Detener Guitarra'):(lang==='en'?'Play Guitar Live':'Tocar Guitarra en Vivo');
-    card.innerHTML=`<div class="amp-header" onclick="this.parentElement.classList.toggle('open')"><strong>${item.artist}</strong><span class="amp-brand">${item.amp}</span></div><div class="knobs-row">${knobsHtml}</div><div class="amp-actions"><button class="btn ${isThisLive?'live-on':'sec'}" onclick="toggleLiveAmp(${idx})">${liveTxt}</button><span style="font-size:.82rem;color:#b8b0a4;cursor:pointer" onclick="this.parentElement.parentElement.classList.toggle('open')" data-en="Read Tone Guide ▾" data-es="Leer Guía de Tono ▾">${lang==='en'?'Read Tone Guide ▾':'Leer Guía de Tono ▾'}</span></div><div class="amp-details" data-en="${item.en}" data-es="${item.es}">${lang==='en'?item.en:item.es}</div>`;
-    box.appendChild(card);
-  });
-}
-
-function makeDistortionCurve(amount){
-  const k=amount*35,n=44100,curve=new Float32Array(n);
-  for(let i=0;i<n;i++){const x=i*2/n-1;curve[i]=(3+k)*x*20*(Math.PI/180)/(Math.PI+k*Math.abs(x));}
-  return curve;
-}
-
-async function toggleLiveAmp(idx){
-  unlockAudio();
-  if(liveStream){liveStream.getTracks().forEach(t=>t.stop());liveStream=null;}
-  if(liveAmpIdx===idx){liveAmpIdx=-1;renderAmps();return;}
-  try{
-    liveStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
-    const src=ctx.createMediaStreamSource(liveStream);
-    const preset=ampPresets.at(idx).knobs;
-    const gainVal=preset.at(0).v,bassVal=preset.at(1).v,midVal=preset.at(2).v,trebVal=preset.at(3).v;
-    const pre=ctx.createGain();pre.gain.value=1+(gainVal*0.8);
-    const shaper=ctx.createWaveShaper();shaper.curve=makeDistortionCurve(gainVal);shaper.oversample='4x';
-    const bass=ctx.createBiquadFilter();bass.type='lowshelf';bass.frequency.value=140;bass.gain.value=(bassVal-5)*2.5;
-    const mid=ctx.createBiquadFilter();mid.type='peaking';mid.frequency.value=750;mid.Q.value=1.2;mid.gain.value=(midVal-5)*2.8;
-    const treb=ctx.createBiquadFilter();treb.type='highshelf';treb.frequency.value=2800;treb.gain.value=(trebVal-5)*2.5;
-    const cab=ctx.createBiquadFilter();cab.type='lowpass';cab.frequency.value=4200;
-    const master=ctx.createGain();master.gain.value=0.35;
-    src.connect(pre);pre.connect(shaper);shaper.connect(bass);bass.connect(mid);mid.connect(treb);treb.connect(cab);cab.connect(master);master.connect(ctx.destination);
-    liveAmpIdx=idx;renderAmps();
-  }catch(e){alert(lang==='en'?'Allow microphone/interface access to play guitar live.':'Permite el acceso al micrófono/interfaz para tocar la guitarra en vivo.');}
-}
-
-function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');btn.classList.add('active');}
-function unlockAudio(){const AC=window.AudioContext||window.webkitAudioContext;if(!ctx)ctx=new AC();if(ctx.state==='suspended')ctx.resume();}
-function playWarmKeys(fs,dur,volMult=1){
-  const t=ctx.currentTime,flt=ctx.createBiquadFilter();
-  flt.type='lowpass';flt.frequency.setValueAtTime(1450,t);flt.connect(ctx.destination);
-  fs.forEach(f=>{
-    new Array(-5,5).forEach(det=>{
-      const o=ctx.createOscillator(),g=ctx.createGain();
-      o.type='triangle';o.frequency.setValueAtTime(f,t);o.detune.setValueAtTime(det,t);
-      g.gain.setValueAtTime(0.001,t);g.gain.linearRampToValueAtTime(0.05*volMult,t+0.02);
-      g.gain.exponentialRampToValueAtTime(0.001,t+dur);
-      o.connect(g);g.connect(flt);o.start(t);o.stop(t+dur);
-    });
-  });
-}
-
-function playFatBass(f,dur,isGhost=false){
-  const t=ctx.currentTime,sub=ctx.createOscillator(),body=ctx.createOscillator(),flt=ctx.createBiquadFilter(),g=ctx.createGain();
-  sub.type='sine';sub.frequency.setValueAtTime(f/2,t);body.type='sawtooth';body.frequency.setValueAtTime(f/2,t);
-  flt.type='lowpass';flt.frequency.setValueAtTime(isGhost?260:620,t);flt.frequency.exponentialRampToValueAtTime(160,t+dur);
-  g.gain.setValueAtTime(isGhost?0.14:0.32,t);g.gain.exponentialRampToValueAtTime(0.01,t+dur);
-  sub.connect(g);body.connect(flt);flt.connect(g);g.connect(ctx.destination);
-  sub.start(t);body.start(t);sub.stop(t+dur);body.stop(t+dur);
-}
-
-function playRealDrum(type,vel=1){
-  const t=ctx.currentTime;
-  if(type==='k'){
-    const o=ctx.createOscillator(),g=ctx.createGain();
-    o.frequency.setValueAtTime(160,t);o.frequency.exponentialRampToValueAtTime(36,t+0.14);
-    g.gain.setValueAtTime(0.6*vel,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.28);
-    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.28);
-  }else if(type==='c'){
-    const len=Math.floor(ctx.sampleRate*0.65),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
-    for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
-    const n=ctx.createBufferSource(),flt=ctx.createBiquadFilter(),g=ctx.createGain();
-    n.buffer=buf;flt.type='highpass';flt.frequency.setValueAtTime(4500,t);
-    g.gain.setValueAtTime(0.16*vel,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.65);
-    n.connect(flt);flt.connect(g);g.connect(ctx.destination);n.start(t);
-  }else{
-    const len=Math.floor(ctx.sampleRate*(type==='s'?0.18:0.045)),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
-    for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
-    const n=ctx.createBufferSource(),flt=ctx.createBiquadFilter(),g=ctx.createGain();
-    n.buffer=buf;flt.type=type==='s'?'bandpass':'highpass';flt.frequency.setValueAtTime(type==='s'?1300:7800,t);
-    g.gain.setValueAtTime((type==='s'?0.35:0.1)*vel,t);g.gain.exponentialRampToValueAtTime(0.001,t+(type==='s'?0.18:0.045));
-    n.connect(flt);flt.connect(g);g.connect(ctx.destination);n.start(t);
-  }
-}
-
-function playClick(acc){
-  const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
-  o.frequency.setValueAtTime(acc?980:580,t);g.gain.setValueAtTime(0.06,t);
-  g.gain.exponentialRampToValueAtTime(0.001,t+0.05);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.05);
-}
-
-function tick(){
-  const totalBars=parseInt(document.getElementById('barCount').value)||4;if(barIdx>=totalBars)barIdx=0;
-  const st=document.getElementById('styleSel').value,d8=(60/bpm)/2,div=isCompound?3:2,beat=Math.floor(step/div),dotCount=stepsPerBar/div;
-  if(step%div===0){
-    for(let i=0;i<dotCount;i++){const el=document.getElementById('d'+i);if(el)el.classList.toggle('on',i===beat);}
-    if(document.getElementById('mChk').checked)playClick(beat===0);
-  }
-  const sel=document.getElementById('sel-'+barIdx),cName=sel?sel.value:'Am',ns=chordDB[cName]||new Array(110);
-  const root=ns.at(0),fifth=ns.at(2)||root*1.5,isFill=(totalBars>=4&&(barIdx+1)%4===0&&step>=stepsPerBar-2);
-  if(step===0){
-    document.querySelectorAll('.bar-box').forEach(b=>b.classList.remove('playing'));
-    const ab=document.getElementById('bar-'+barIdx);if(ab)ab.classList.add('playing');
-    if(barIdx===0)playRealDrum('c',1);
-    playWarmKeys(ns,st==='funk'?d8*1.2:d8*(stepsPerBar-0.4),1);
-  }else if((st==='funk'&&(step===3||step===6))||(st==='jazz'&&(step===3||step===5))||(st==='blues'&&step===4)){
-    playWarmKeys(ns,d8*1.1,0.75);
-  }
-  if(step===0)playFatBass(root,d8*1.6,false);
-  else if(st==='funk'&&(step===2||step===3||step===5||step===7))playFatBass(step===5?fifth:root*(step===7?2:1),d8*0.65,step===2);
-  else if(st==='jazz'&&(step===2||step===4||step===6))playFatBass(step===2?ns.at(1):step===4?fifth:root*1.12,d8*1.4,false);
-  else if(step===3||step===4||step===6)playFatBass(step===4?fifth:root,d8*0.9,step===3);
-  playRealDrum('h',step%div===0?1:0.45);
-  if(step===0||(!isCompound&&step===4)||(isCompound&&step===6))playRealDrum('k',1);
-  else if(st==='funk'&&step===7)playRealDrum('k',0.7);
-  if((!isCompound&&(step===2||step===6))||(isCompound&&step===3))playRealDrum('s',1);
-  else if((st==='funk'&&step===5)||isFill)playRealDrum('s',isFill?0.85:0.25);
-  step++;if(step>=stepsPerBar){step=0;barIdx=(barIdx+1)%totalBars;}
-}
-
-function togglePlay(){
-  unlockAudio();const b=document.getElementById('pBtn');
-  if(play){clearInterval(tmr);play=false;b.classList.remove('stop');b.innerText=lang==='en'?'Play Band':'Tocar Banda';document.querySelectorAll('.dot').forEach(d=>d.classList.remove('on'));document.querySelectorAll('.bar-box').forEach(box=>box.classList.remove('playing'));}
-  else{play=true;step=0;barIdx=0;b.classList.add('stop');b.innerText=lang==='en'?'Stop':'Detener';tick();tmr=setInterval(tick,((60/bpm)/2)*1000);}
-}
-
-function setBpm(v){bpm=v;document.getElementById('bVal').innerText=v;if(play){clearInterval(tmr);tmr=setInterval(tick,((60/bpm)/2)*1000);}}
-function toggleLang(){lang=lang==='en'?'es':'en';document.getElementById('lBtn').innerText=lang==='en'?'ES / Español':'EN / English';document.querySelectorAll('[data-en]').forEach(e=>e.innerText=e.getAttribute('data-'+lang));document.getElementById('pBtn').innerText=play?(lang==='en'?'Stop':'Detener'):(lang==='en'?'Play Band':'Tocar Banda');renderAmps();}
-
-changeTimeSig();buildGrid();renderAmps();
-</script>
+<script src="studio.js"></script>
 </body>
 </html>
