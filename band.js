@@ -25,6 +25,7 @@ function submitIndie(){
   window.location.href = `mailto:tonelabjam@://gmail.com{subj}&body=${body}`;
 }
 
+
 function changeTimeSig(){
   const sig = document.getElementById('timeSig').value;
   isCompound = (sig === '6/8' || sig === '9/8');
