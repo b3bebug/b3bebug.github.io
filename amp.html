@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amp Tone & Live Simulator - ToneLab Studio</title>
+<style>
+:root{--bg:#f6f2e9;--card:#fffdf9;--accent:#b45309;--text:#1f2937;--muted:#6b7280;--border:#e2dac8}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:var(--bg);color:var(--text);line-height:1.6}
+header{background:var(--card);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.back-btn{text-decoration:none;color:var(--accent);font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;gap:.4rem}
+.lang-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:.4rem .8rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem}
+.container{max-width:820px;margin:2rem auto;padding:0 1rem}
+.amp-stage{background:#262320;color:#f5f2eb;border:3px solid #443d36;border-radius:16px;padding:1.8rem;box-shadow:0 10px 25px rgba(0,0,0,.15);margin-bottom:1.5rem}
+.amp-top{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.amp-top h1{font-size:1.6rem;color:#fff}
+.amp-badge{background:#141210;color:#fbbf24;border:1px solid #574e44;padding:.35rem .9rem;border-radius:6px;font-weight:800;letter-spacing:1px}
+.knobs-big{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:space-around;background:#1a1816;padding:1.5rem;border-radius:12px;border:1px solid #3a342e;margin-bottom:1.5rem}
+.knob-unit{text-align:center;width:76px}
+.knob{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,#4a443e 30%,#141210 100%);border:3px solid #8c8275;margin:0 auto .4rem;position:relative}
+.knob-line{width:4px;height:22px;background:#fbbf24;position:absolute;top:5px;left:50%;margin-left:-2px;transform-origin:bottom center;border-radius:2px}
+.knob-label{font-size:.8rem;color:#b8b0a4;display:block}.knob-val{font-size:.95rem;font-weight:bold;color:#fbbf24}
+button.live-btn{width:100%;padding:.9rem;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;transition:.2s}
+button.live-btn.on{background:#16a34a}
+.guide-card{background:var(--card);padding:1.8rem;border-radius:12px;border:1px solid var(--border)}
+.guide-card h2{color:var(--accent);margin-bottom:.8rem;font-size:1.25rem}
+footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="back-btn" data-en="← Back to ToneLab Studio" data-es="← Volver a ToneLab Studio">← Back to ToneLab Studio</a>
+  <button class="lang-btn" onclick="toggleLang()" id="lBtn">ES / Español</button>
+</header>
+<div class="container">
+  <div class="amp-stage">
+    <div class="amp-top"><h1 id="artistTitle">Loading...</h1><span class="amp-badge" id="ampModel">AMP</span></div>
+    <div class="knobs-big" id="knobsBox"></div>
+    <button class="live-btn" id="liveBtn" onclick="togglePageLive()" data-en="Plug In & Play Guitar Live" data-es="Conectar y Tocar Guitarra en Vivo">Plug In & Play Guitar Live</button>
+  </div>
+  <div class="guide-card">
+    <h2 data-en="Tone Breakdown & Gear Tips" data-es="Análisis del Sonido y Consejos de Equipo">Tone Breakdown & Gear Tips</h2>
+    <p id="toneDesc" style="font-size:1rem;line-height:1.7"></p>
+  </div>
+</div>
+<footer><p>© 2026 ToneLab Studio — tonelabjam@gmail.com | <a href="privacy.html" style="color:var(--accent)">Privacy Policy & Cookies</a></p></footer>
+<script src="amps.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const ampIndex = parseInt(params.get('id')) || 0;
+const currentAmp = ampPresets.at(ampIndex) || ampPresets.at(0);
+
+function renderSingleAmp(){
+  document.title = currentAmp.artist + " - ToneLab Studio";
+  document.getElementById('artistTitle').innerText = currentAmp.artist;
+  document.getElementById('ampModel').innerText = currentAmp.amp;
+  document.getElementById('toneDesc').innerText = lang === 'en' ? currentAmp.en : currentAmp.es;
+  const box = document.getElementById('knobsBox');
+  box.innerHTML = '';
+  currentAmp.knobs.forEach(k => {
+    const deg = -135 + (k.v * 27);
+    box.innerHTML += `<div class="knob-unit"><div class="knob"><div class="knob-line" style="transform:rotate(${deg}deg)"></div></div><span class="knob-label">${k.n}</span><span class="knob-val">${k.v}</span></div>`;
+  });
+  const btn = document.getElementById('liveBtn');
+  const isOn = (liveAmpIdx === ampIndex);
+  btn.classList.toggle('on', isOn);
+  btn.innerText = isOn ? (lang === 'en' ? 'Stop Guitar Audio' : 'Detener Guitarra') : (lang === 'en' ? 'Plug In & Play Guitar Live' : 'Conectar y Tocar Guitarra en Vivo');
+}
+
+async function togglePageLive(){
+  await toggleLiveAmp(ampIndex);
+  renderSingleAmp();
+}
+
+function toggleLang(){
+  lang = lang === 'en' ? 'es' : 'en';
+  document.getElementById('lBtn').innerText = lang === 'en' ? 'ES / Español' : 'EN / English';
+  document.querySelectorAll('[data-en]').forEach(e => e.innerText = e.getAttribute('data-' + lang));
+  renderSingleAmp();
+}
+
+renderSingleAmp();
+</script>
+</body>
+</html>
