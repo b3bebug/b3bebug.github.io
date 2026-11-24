@@ -112,4 +112,14 @@ async function toggleLiveAmp(idx){
 }
 
 renderAmps();
+function linkAmpsToPages(){
+  const cards = document.querySelectorAll('#ampsContainer .amp-card');
+  cards.forEach((card, idx) => {
+    const btnArea = card.querySelector('.amp-actions');
+    if(btnArea){
+      btnArea.innerHTML = `<a href="amp.html?id=${idx}" class="btn" style="text-decoration:none" data-en="Open Amp & Play Live →" data-es="Abrir Ampli y Tocar en Vivo →">${lang === 'en' ? 'Open Amp & Play Live →' : 'Abrir Ampli y Tocar en Vivo →'}</a>`;
+    }
+  });
+}
+linkAmpsToPages();
 
