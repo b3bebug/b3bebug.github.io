@@ -117,9 +117,10 @@ function linkAmpsToPages(){
   cards.forEach((card, idx) => {
     const btnArea = card.querySelector('.amp-actions');
     if(btnArea){
-      btnArea.innerHTML = `<a href="amp.html?id=${idx}" class="btn" style="text-decoration:none" data-en="Open Amp & Play Live →" data-es="Abrir Ampli y Tocar en Vivo →">${lang === 'en' ? 'Open Amp & Play Live →' : 'Abrir Ampli y Tocar en Vivo →'}</a>`;
+      const guideTxt = lang === 'en' ? 'Read Tone Guide ▾' : 'Leer Guía de Tono ▾';
+      const openTxt = lang === 'en' ? 'Open Amp & Play Live →' : 'Abrir Ampli en Grande →';
+      btnArea.innerHTML = `<a href="amp.html?id=${idx}" class="btn" style="text-decoration:none" data-en="Open Amp & Play Live →" data-es="Abrir Ampli en Grande →">${openTxt}</a><span style="font-size:.85rem;color:#fbbf24;cursor:pointer;font-weight:600" onclick="this.parentElement.parentElement.classList.toggle('open')" data-en="Read Tone Guide ▾" data-es="Leer Guía de Tono ▾">${guideTxt}</span>`;
     }
   });
 }
 linkAmpsToPages();
-
