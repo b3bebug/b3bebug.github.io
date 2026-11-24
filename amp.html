@@ -81,6 +81,61 @@ function toggleLang(){
 }
 
 renderSingleAmp();
+<script>
+const params = new URLSearchParams(window.location.search);
+const ampIndex = parseInt(params.get('id')) || 0;
+const currentAmp = JSON.parse(JSON.stringify(ampPresets.at(ampIndex) || ampPresets.at(0)));
+let liveChain = null;
+
+function renderSingleAmp(){
+  document.title = currentAmp.artist + " - ToneLab Studio";
+  document.getElementById('artistTitle').innerText = currentAmp.artist;
+  document.getElementById('ampModel').innerText = currentAmp.amp;
+  document.getElementById('toneDesc').innerText = lang === 'en' ? currentAmp.en : currentAmp.es;
+  const box = document.getElementById('knobsBox'); box.innerHTML = '';
+  currentAmp.knobs.forEach((k, kIdx) => {
+    const deg = -135 + (k.v * 27);
+    box.innerHTML += `<div class="knob-unit"><div class="knob"><div class="knob-line" id="kl-${kIdx}" style="transform:rotate(${deg}deg)"></div></div><span class="knob-label">${k.n}</span><span class="knob-val" id="kv-${kIdx}">${k.v}</span><input type="range" min="0" max="10" step="1" value="${k.v}" style="width:100%;accent-color:#fbbf24;margin-top:4px" oninput="updateKnob(${kIdx}, this.value)"></div>`;
+  });
+}
+
+function updateKnob(kIdx, val){
+  val = parseFloat(val);
+  currentAmp.knobs.at(kIdx).v = val;
+  document.getElementById('kv-' + kIdx).innerText = val;
+  document.getElementById('kl-' + kIdx).style.transform = `rotate(${-135 + (val * 27)}deg)`;
+  if(!liveChain) return;
+  if(kIdx === 0){ liveChain.pre.gain.value = 1 + (val * 0.8); liveChain.shaper.curve = makeDistortionCurve(val); }
+  else if(kIdx === 1) liveChain.bass.gain.value = (val - 5) * 2.5;
+  else if(kIdx === 2) liveChain.mid.gain.value = (val - 5) * 2.8;
+  else if(kIdx === 3) liveChain.treb.gain.value = (val - 5) * 2.5;
+}
+
+async function togglePageLive(){
+  unlockAudio();
+  const btn = document.getElementById('liveBtn');
+  if(liveStream){ liveStream.getTracks().forEach(t => t.stop()); liveStream = null; liveChain = null; btn.classList.remove('on'); btn.innerText = lang === 'en' ? 'Plug In & Play Guitar Live' : 'Conectar y Tocar Guitarra en Vivo'; return; }
+  try{
+    liveStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    const src = ctx.createMediaStreamSource(liveStream), k = currentAmp.knobs;
+    const pre = ctx.createGain(); pre.gain.value = 1 + (k.at(0).v * 0.8);
+    const shaper = ctx.createWaveShaper(); shaper.curve = makeDistortionCurve(k.at(0).v); shaper.oversample = '4x';
+    const bass = ctx.createBiquadFilter(); bass.type = 'lowshelf'; bass.frequency.value = 140; bass.gain.value = (k.at(1).v - 5) * 2.5;
+    const mid = ctx.createBiquadFilter(); mid.type = 'peaking'; mid.frequency.value = 750; mid.Q.value = 1.2; mid.gain.value = (k.at(2).v - 5) * 2.8;
+    const treb = ctx.createBiquadFilter(); treb.type = 'highshelf'; treb.frequency.value = 2800; treb.gain.value = (k.at(3).v - 5) * 2.5;
+    const cab = ctx.createBiquadFilter(); cab.type = 'lowpass'; cab.frequency.value = 4200;
+    const master = ctx.createGain(); master.gain.value = 0.35;
+    src.connect(pre); pre.connect(shaper); shaper.connect(bass); bass.connect(mid); mid.connect(treb); treb.connect(cab); cab.connect(master); master.connect(ctx.destination);
+    liveChain = { pre, shaper, bass, mid, treb };
+    btn.classList.add('on'); btn.innerText = lang === 'en' ? 'Stop Guitar Audio' : 'Detener Guitarra';
+  }catch(e){ alert(lang === 'en' ? 'Allow microphone/interface access.' : 'Permite el acceso al micrófono/interfaz.'); }
+}
+
+function toggleLang(){ lang = lang === 'en' ? 'es' : 'en'; document.getElementById('lBtn').innerText = lang === 'en' ? 'ES / Español' : 'EN / English'; document.querySelectorAll('[data-en]').forEach(e => e.innerText = e.getAttribute('data-' + lang)); renderSingleAmp(); }
+renderSingleAmp();
 </script>
+</body>
+</html>
+
 </body>
 </html>
